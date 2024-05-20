@@ -53,21 +53,21 @@ const Footer = () => {
   }
 
   return (
-    <div className='w-full text-white bg-black border-b border-white py-5'>
+    <div className='w-full text-secondary-color bg-primary-color border-b border-secondary-color py-5'>
       <div className='flex md:flex-row flex-col gap-4 flex-1'>
         <div className="flex-[0.5] items-start  flex gap-5 md:flex-row flex-col justify-between px-4">
 
           {/* 1 */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             <h3 className='font-bold text-[24px]'>Exclusive</h3>
             <h4 className='text-[20px]  font-medium'>Subscribe</h4>
             <p className='text-[13px] font-normal'>Get 10% off your first order</p>
-            <div className='border flex gap-2 rounded-md p-1  border-white'>
+            <div className='border flex  items-center gap-2 rounded-md p-1  border-secondary-color'>
               <div>
                 <input type="email" name="" id="" placeholder='Enter your email' className='outline-none h-full w-full text-16px bg-transparent' />
               </div>
               <div className='cursor-pointer' onClick={handleSubmitEmailData}>
-                <BiMailSend className='h-8 w-8' />
+                <BiMailSend className='h-6 w-6' />
               </div>
             </div>
           </div>
@@ -96,7 +96,7 @@ const Footer = () => {
               <div className='flex flex-col gap-2 '>
                 {
                   footerData?.account.map((value, index) => {
-                    return <Link href={value?.Link} key={index} className='text-white '  >
+                    return <Link href={value?.Link} key={index} className='text-secondary-color '  >
                       {value?.name}
                     </Link>
                   })
@@ -109,7 +109,7 @@ const Footer = () => {
               <div className='flex flex-col gap-2 '>
                 {
                   footerData?.QuickLink.map((value, index) => {
-                    return <Link href={value?.Link} key={index} className='text-white '  >
+                    return <Link href={value?.Link} key={index} className='text-secondary-color '  >
                       {value?.name}
                     </Link>
                   })

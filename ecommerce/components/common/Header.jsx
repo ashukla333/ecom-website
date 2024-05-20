@@ -34,14 +34,14 @@ console.log(isMenuOpen,"isMenuOpen")
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full ${isSticky ? "!bg-black duration-1000 shadow-lg  text-white" : "bg-transparent "} top-0 left-0     flex justify-between items-center z-[1000]`}
+      className={`fixed top-0 left-0 w-full ${isSticky ? "bg-primary-color duration-1000 shadow-lg  text-secondary-color" : "bg-transparent text-primary-color  "} top-0 left-0     flex justify-between items-center z-[1000]`}
     >
       {/* laptop device */}
-      <div className='w-full border-b-2 border-black py-2  lg:block hidden'>
+      <div className='w-full border-b-2 border-primary-color py-2  lg:block hidden'>
         <div className="flex flex-1 w-full  items-center">
           <div className=" flex-[0.2] text-center p-2 h-10 w-10 ">
             {/* <Image className='w-full h-full ' src={""} height={1000} width={1000} alt='logo' /> */}
-            <span className='text-[20px] font-[800] uppercase cursor-pointer '>Kingsvilla</span>
+            <span className='text-[20px]  uppercase font-serif cursor-pointer '>Kingsvilla</span>
           </div>
           <div className="flex-[0.6] p-2 " >
             <div className="flex items-center text-[16px] font-[700]  justify-around">

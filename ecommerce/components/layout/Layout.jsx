@@ -9,7 +9,7 @@ export default function Layout({ children }) {
   return (
     <>
       <Header />
-      <main className='w-full min-h-[100vh]  overflow-x-hidden'>{children}</main>
+      <main className='w-full min-h-[200vh]  overflow-x-hidden'>{children}</main>
       <Footer />
       <CopyRights />
     </>

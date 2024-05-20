@@ -1,11 +1,10 @@
 'use client'
-import { FcLike } from "react-icons/fc";
 import React, { useEffect, useState } from 'react'
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaRegHeart } from "react-icons/fa";
 import { RiMenu2Line } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
-
+import { CgProfile } from "react-icons/cg";
 const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,11 +39,11 @@ console.log(isMenuOpen,"isMenuOpen")
       {/* laptop device */}
       <div className='w-full border-b-2 border-black py-2  lg:block hidden'>
         <div className="flex flex-1 w-full  items-center">
-          <div className=" flex-[0.3] text-center p-2 h-10 w-10 ">
+          <div className=" flex-[0.2] text-center p-2 h-10 w-10 ">
             {/* <Image className='w-full h-full ' src={""} height={1000} width={1000} alt='logo' /> */}
-            <span className='text-[20px] font-[800] uppercase cursor-pointer '>Modern Closet</span>
+            <span className='text-[20px] font-[800] uppercase cursor-pointer '>Kingsvilla</span>
           </div>
-          <div className="flex-[0.5] p-2 " >
+          <div className="flex-[0.6] p-2 " >
             <div className="flex items-center text-[16px] font-[700]  justify-around">
               <li className="list-none cursor-pointer">Home</li>
               <li className="list-none cursor-pointer">Contact</li>
@@ -60,6 +59,9 @@ console.log(isMenuOpen,"isMenuOpen")
               <div className="cursor-pointer">
                 <MdOutlineShoppingCart className="h-6 w-6" />
               </div>
+              <div className="cursor-pointer">
+                <CgProfile className="h-7  w-7" />
+              </div>
             </div>
           </div>
         </div>
@@ -68,7 +70,7 @@ console.log(isMenuOpen,"isMenuOpen")
       {/* mobile device */}
       <div className=" lg:hidden block w-full border-b-2 border-black">
         <div className="flex justify-between !w-full p-3">
-          <div className="uppercase text-base cursor-pointer font-[700]">Modern Closet</div>
+          <div className="uppercase text-base cursor-pointer font-[700]">Kingsvilla</div>
           <div className="cursor-pointer"  onClick={toggleMenu}><RiMenu2Line className="w-8 h-8"/></div>
         </div>
       </div>

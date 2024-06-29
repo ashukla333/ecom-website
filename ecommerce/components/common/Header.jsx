@@ -1,14 +1,15 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { FaRegHeart } from "react-icons/fa";
+import { FaInfoCircle, FaRegHeart, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { RiMenu2Line } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
+import { FaUser, FaUserPlus } from 'react-icons/fa6';
 const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-console.log(isMenuOpen,"isMenuOpen")
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -32,9 +33,24 @@ console.log(isMenuOpen,"isMenuOpen")
     };
   }, []);
 
+
+  const [showModal, setShowModal] = useState(false);
+  const closeModalTimeout = useRef(null);
+
+  const handleMouseEnter = () => {
+    clearTimeout(closeModalTimeout.current);
+    setShowModal(true);
+  };
+
+  const handleMouseLeave = () => {
+    closeModalTimeout.current = setTimeout(() => {
+      setShowModal(false);
+    }, 700); // Adjust the delay as needed
+  };
+
   return (
     <nav
-      className={`fixed top-0 left-0 w-full ${isSticky ? "!bg-black duration-1000 shadow-lg  text-white" : "bg-transparent "} top-0 left-0     flex justify-between items-center z-[1000]`}
+      className={`fixed top-0 left-0 w-full ${isSticky ? "!bg-black duration-1000 shadow-lg  text-white" : "bg-transparent text-black "} top-0 left-0     flex justify-between items-center z-[1000]`}
     >
       {/* laptop device */}
       <div className='w-full border-b-2 border-black py-2  lg:block hidden'>
@@ -60,12 +76,53 @@ console.log(isMenuOpen,"isMenuOpen")
                 <MdOutlineShoppingCart className="h-6 w-6" />
               </div>
               <div className="cursor-pointer">
-                <CgProfile className="h-7  w-7" />
+              <div
+             className="relative cursor-pointer"
+             onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            >
+      <CgProfile className="h-7 w-7" />
+      {showModal && (
+        <div
+          className="absolute right-0 w-48  bg-primary-color text-secondary-color border rounded shadow-lg"
+          onMouseEnter={() => clearTimeout(closeModalTimeout.current)}
+          onMouseLeave={handleMouseLeave}
+        >
+          <div className="p-4">
+            <h2 className="text-xl mb-4">Profile</h2>
+            <ul>
+              <li className="mb-2 cursor-pointer flex items-center">
+                <FaUser className="mr-2" />
+                Profile Details
+              </li>
+              <li className="mb-2 cursor-pointer flex items-center">
+                <FaInfoCircle className="mr-2" />
+                About
+              </li>
+              <li className="mb-2 cursor-pointer flex items-center">
+                <FaSignOutAlt className="mr-2" />
+                Logout
+              </li>
+              <li className="mb-2 cursor-pointer flex items-center">
+                <FaSignInAlt className="mr-2" />
+                Login
+              </li>
+              <li className="mb-2 cursor-pointer flex items-center">
+                <FaUserPlus className="mr-2" />
+                Signup
+              </li>
+            </ul>
+          </div>
+        </div>
+      )}
+    </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      
 
       {/* mobile device */}
       <div className=" lg:hidden block w-full border-b-2 border-black">

@@ -1,19 +1,26 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import { MdOutlineShoppingCart } from "react-icons/md";
-import { FaRegHeart } from "react-icons/fa";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
+import { GiShoppingBag } from "react-icons/gi";
+import {
+  FaInfoCircle,
+  FaRegHeart,
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaUserCircle,
+} from "react-icons/fa";
 import { RiMenu2Line } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
-import { CgProfile } from "react-icons/cg";
+import { FaUser, FaUserPlus } from "react-icons/fa6";
+import SearchBar from "./input/SearchBar";
+import Link from "next/link";
+
 const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-console.log(isMenuOpen,"isMenuOpen")
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,35 +39,94 @@ console.log(isMenuOpen,"isMenuOpen")
     };
   }, []);
 
+  const [showModal, setShowModal] = useState(false);
+  const closeModalTimeout = useRef(null);
+
+  const handleMouseEnter = () => {
+    clearTimeout(closeModalTimeout.current);
+    setShowModal(true);
+  };
+
+  const handleMouseLeave = () => {
+    closeModalTimeout.current = setTimeout(() => {
+      setShowModal(false);
+    }, 700);
+  };
+
   return (
     <nav
-      className={`fixed top-0 left-0 w-full ${isSticky ? "bg-primary-color duration-1000 shadow-lg  text-secondary-color" : "bg-transparent text-primary-color  "} top-0 left-0     flex justify-between items-center z-[1000]`}
+      className={`border-b shadow-primary-color shadow top-0 left-0 w-full ${
+        isSticky
+          ? "!bg-primary-color duration-1000 shadow-lg  !text-secondary-color"
+          : "bg-transparent text-secondary-color "
+      } top-0 left-0     flex justify-between items-center !z-[1000]`}
     >
       {/* laptop device */}
-      <div className='w-full border-b-2 border-primary-color py-2  lg:block hidden'>
-        <div className="flex flex-1 w-full  items-center">
-          <div className=" flex-[0.2] text-center p-2 h-10 w-10 ">
+      <div className="w-full border-b-2 border-primary-color py-2  z-[1000] lg:block hidden">
+        <div className="flex  flex-1 w-full   items-center">
+          <div className=" flex-[0.2]  text-center p-2 h-12 w-10 ">
             {/* <Image className='w-full h-full ' src={""} height={1000} width={1000} alt='logo' /> */}
-            <span className='text-[20px]  uppercase font-serif cursor-pointer '>Kingsvilla</span>
+            <Link
+              className="text-[24px]  uppercase font-mono drop-shadow-sm font-[900] text-main-text cursor-pointer "
+              href={"/"}
+            >
+              Kingsvilla
+            </Link>
           </div>
-          <div className="flex-[0.6] p-2 " >
-            <div className="flex items-center text-[16px] font-[700]  justify-around">
-              <li className="list-none cursor-pointer">Home</li>
-              <li className="list-none cursor-pointer">Contact</li>
-              <li className="list-none cursor-pointer">About</li>
-              <li className="list-none cursor-pointer">Sign Up</li>
-            </div>
+          <div className="flex-[0.6] p-2 ">
+            <SearchBar placeholder={"Search by Product & Category name..."} />
           </div>
           <div className="flex-[0.2] p-2 ">
             <div className="flex items-center justify-evenly">
-              <div className="cursor-pointer">
-                <FaRegHeart className="h-5 w-5 " />
+              <div className="cursor-pointer text-main-text ">
+                <FaRegHeart className="h-[25px] w-full" />
               </div>
-              <div className="cursor-pointer">
-                <MdOutlineShoppingCart className="h-6 w-6" />
+              <div className="cursor-pointer text-main-text ">
+                <GiShoppingBag className="h-[25px] w-full" />
               </div>
-              <div className="cursor-pointer">
-                <CgProfile className="h-7  w-7" />
+              <div className="cursor-pointer text-main-text ">
+                <div
+                  className="relative cursor-pointer"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <FaUserCircle className="h-[28px] w-full" />
+                  {showModal && (
+                    <div
+                      className="absolute right-0 w-40  bg-primary-color  border rounded shadow-lg"
+                      onMouseEnter={() =>
+                        clearTimeout(closeModalTimeout.current)
+                      }
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <div className="p-2 border-main-text rounded-md m-1 border-2">
+                        {/* <h2 className="text-xl mb-4">Profile</h2> */}
+                        <ul>
+                          <li className="mb-2 cursor-pointer flex hover:text-[#FE2C54] text-[#f08ea0] items-center">
+                            <FaUser className="mr-2 cursor-pointer text-main-text" />
+                            Profile Details
+                          </li>
+                          <li className="mb-2 cursor-pointer flex hover:text-[#FE2C54] text-[#f08ea0] items-center">
+                            <FaInfoCircle className="mr-2 cursor-pointer text-main-text" />
+                            About
+                          </li>
+                          <li className="mb-2 cursor-pointer flex hover:text-[#FE2C54] text-[#f08ea0] items-center">
+                            <FaSignOutAlt className="mr-2 cursor-pointer text-main-text" />
+                            Logout
+                          </li>
+                          <li className="mb-2 cursor-pointer flex hover:text-[#FE2C54] text-[#f08ea0] items-center">
+                            <FaSignInAlt className="mr-2 cursor-pointer text-main-text" />
+                            Login
+                          </li>
+                          <li className="mb-2 cursor-pointer flex hover:text-[#FE2C54] text-[#f08ea0] items-center">
+                            <FaUserPlus className="mr-2 cursor-pointer text-main-text" />
+                            Signup
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -70,8 +136,12 @@ console.log(isMenuOpen,"isMenuOpen")
       {/* mobile device */}
       <div className=" lg:hidden block w-full border-b-2 border-black">
         <div className="flex justify-between !w-full p-3">
-          <div className="uppercase text-base cursor-pointer font-[700]">Kingsvilla</div>
-          <div className="cursor-pointer"  onClick={toggleMenu}><RiMenu2Line className="w-8 h-8"/></div>
+          <div className="uppercase text-base cursor-pointer font-[700]">
+            Kingsvilla
+          </div>
+          <div className="cursor-pointer" onClick={toggleMenu}>
+            <RiMenu2Line className="w-8 h-8" />
+          </div>
         </div>
       </div>
 
@@ -82,7 +152,7 @@ console.log(isMenuOpen,"isMenuOpen")
               className="text-white   focus:outline-none"
               onClick={toggleMenu}
             >
-             <IoMdClose className="hover:rotate-180"  />
+              <IoMdClose className="hover:rotate-180" />
             </button>
             {/* Add your menu items here */}
             <div className="text-white mt-4">
@@ -100,7 +170,7 @@ console.log(isMenuOpen,"isMenuOpen")
         </div>
       )}
     </nav>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

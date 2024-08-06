@@ -13,6 +13,7 @@ import { IoMdClose } from "react-icons/io";
 import { FaUser, FaUserPlus } from "react-icons/fa6";
 import SearchBar from "./input/SearchBar";
 import Link from "next/link";
+import { BiSolidHeartCircle } from "react-icons/bi";
 
 const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
@@ -79,11 +80,11 @@ const Header = () => {
           <div className="flex-[0.2] p-2 ">
             <div className="flex items-center justify-evenly">
               <div className="cursor-pointer text-main-text ">
-                <FaRegHeart className="h-[25px] w-full" />
+              <BiSolidHeartCircle fill="red" className="h-8 animate-pulse w-8" />
               </div>
-              <div className="cursor-pointer text-main-text ">
+              <Link href={'/cart'} className="cursor-pointer text-main-text ">
                 <GiShoppingBag className="h-[25px] w-full" />
-              </div>
+              </Link>
               <div className="cursor-pointer text-main-text ">
                 <div
                   className="relative cursor-pointer"

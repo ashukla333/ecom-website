@@ -12,7 +12,7 @@ const Button = ({
     return {
       primary:
         "p-2 bg-primary-color grid place-content-center rounded text-white-color border-[0.1rem] border-primary-color",
-      secondary: "p-2 bg-white-color grid place-content-center rounded ",
+      secondary: "p-2 bg-main-text text-lg text-white grid place-content-center rounded ",
       gradient:
         "p-2 text-white-color grid place-content-center rounded !bg-gradient-to-r !from-[rgb(0,15,154)] !to-[rgb(16,74,189)] ",
       linkButton: "underline bg-transparent border-none",

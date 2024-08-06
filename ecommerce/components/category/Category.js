@@ -90,7 +90,7 @@ const Category = () => {
         <Modal
           open={filter}
           modelContentCss={
-            "!w-full !absolute left-0 top-0 xl:!w-[30%] !w-[95%] md:!w-[50%] lg:!w-[40%] !h-[100%]"
+            "!w-full !absolute left-0 scrollbar-hide !overflow-scroll top-0 xl:!w-[30%] !w-[95%] md:!w-[50%] lg:!w-[40%] !h-[100%]"
           }
           setModelOpen={() => {
             setFilter(!filter);

@@ -4,9 +4,9 @@ import Content from "../common/Content";
 import Link from "next/link";
 import { BiSolidHeartCircle } from "react-icons/bi";
 import Button from "../common/Button";
+import { FaMinus, FaPlus } from "react-icons/fa6";
 
-const CartCard = ({Increment=0,setIncrement=()=>{}}) => {
-  
+const CartCard = ({ Increment = 0, setIncrement = () => {} }) => {
   console.log(Increment);
 
   return (
@@ -27,10 +27,8 @@ const CartCard = ({Increment=0,setIncrement=()=>{}}) => {
             <div className="py-2">
               Quantity:-
               <div className="flex w-full pt-1 gap-2 ">
-                <Button
-                  type="secondary"
-                  value="-"
-                  className="w-full "
+                <div
+                  className="p-2 bg-main-text text-lg cursor-pointer text-white grid place-content-center rounded"
                   onClick={
                     Increment <= 0
                       ? () => {}
@@ -38,21 +36,23 @@ const CartCard = ({Increment=0,setIncrement=()=>{}}) => {
                           setIncrement(Increment - 1);
                         }
                   }
-                />
+                >
+                  <FaMinus />
+                </div>
                 <input
                   type="text"
-                  className="border outline-2 font-bold text-lg rounded-md text-center border-main-text"
+                  className="border w-16 outline-2 font-bold text-lg rounded-md text-center border-main-text"
                   name="Quantity"
                   value={Increment}
                 />
-                <Button
-                  type="secondary"
-                  value="+"
-                  className="w-full"
+                <div
+                  className="p-2 bg-main-text text-lg cursor-pointer text-white grid place-content-center rounded"
                   onClick={() => {
                     setIncrement(Increment + 1);
                   }}
-                />
+                >
+                  <FaPlus />
+                </div>
               </div>
             </div>
 

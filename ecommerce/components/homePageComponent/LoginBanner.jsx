@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { BiLogInCircle } from "react-icons/bi";
 import { VscSignIn } from "react-icons/vsc";
@@ -20,20 +21,22 @@ const LoginBanner = () => {
           Register Kingsvilla{" "}
         </div>
         <div className="flex items-center justify-between gap-2">
-          <div
+          <Link
+            href={"/login"}
             className="!w-max gap-2 h-12 animate-shimmer items-center justify-center rounded-md border border-slate-300 cursor-pointer bg-primary-color   bg-[length:200%_100%] px-6 font-medium text-main-text transition-colors focus:outline-none focus:ring-2 flex focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
             type=""
           >
             <span className="!font-medium">Login</span>
             <BiLogInCircle />
-          </div>
-          <div
+          </Link>
+          <Link
+          href={'/signup'}
             className="!w-max gap-2 h-12 animate-shimmer items-center justify-center rounded-md border border-slate-300 cursor-pointer bg-primary-color   bg-[length:200%_100%] px-6 font-medium text-main-text transition-colors focus:outline-none focus:ring-2 flex focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
             type=""
           >
             <span className="!font-medium">Sign In</span>
             <VscSignIn />
-          </div>
+          </Link>
         </div>
       </div>
     </div>

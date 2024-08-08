@@ -10,10 +10,10 @@ import {
 } from "react-icons/fa";
 import { RiMenu2Line } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
-import { FaUser, FaUserPlus } from "react-icons/fa6";
+import { FaCrown, FaUser, FaUserPlus } from "react-icons/fa6";
 import SearchBar from "./input/SearchBar";
 import Link from "next/link";
-import { BiSolidHeartCircle } from "react-icons/bi";
+import { BiSolidHeartCircle, BiUser } from "react-icons/bi";
 
 const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
@@ -67,11 +67,18 @@ const Header = () => {
         <div className="flex  flex-1 w-full   items-center">
           <div className=" flex-[0.2]  text-center p-2 h-12 w-10 ">
             {/* <Image className='w-full h-full ' src={""} height={1000} width={1000} alt='logo' /> */}
-            <Link
+            {/* <Link
               className="text-[24px]  uppercase font-mono drop-shadow-sm font-[900] text-main-text cursor-pointer "
               href={"/"}
             >
               Kingsvilla
+            </Link> */}
+            <Link
+              href={""}
+              className="text-2xl relative text-center uppercase text-ellipsis font-mono font-bold mb-5"
+            >
+              Kingsvilla
+              <FaCrown className="text-yellow-500 absolute -left-5 -top-2 -rotate-45" />
             </Link>
           </div>
           <div className="flex-[0.6] p-2 ">
@@ -79,10 +86,16 @@ const Header = () => {
           </div>
           <div className="flex-[0.2] p-2 ">
             <div className="flex items-center justify-evenly">
-              <div className="cursor-pointer text-main-text ">
-              <BiSolidHeartCircle fill="red" className="h-8 animate-pulse w-8" />
-              </div>
-              <Link href={'/cart'} className="cursor-pointer text-main-text ">
+              <Link
+                href={"wishlist"}
+                className="cursor-pointer text-main-text "
+              >
+                <BiSolidHeartCircle
+                  fill="red"
+                  className="h-8 animate-pulse w-8"
+                />
+              </Link>
+              <Link href={"/cart"} className="cursor-pointer text-main-text ">
                 <GiShoppingBag className="h-[25px] w-full" />
               </Link>
               <div className="cursor-pointer text-main-text ">
@@ -91,38 +104,56 @@ const Header = () => {
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <FaUserCircle className="h-[28px] w-full" />
+                  <div className="flex gap-2 border-[2px]  border-main-text  px-5 py-1 rounded-[23px] items-center justify-center">
+                    <FaUser className="h-[19px] w-full" />{" "}
+                    <spam className="text-[18px] font-[700]">Aman</spam>
+                  </div>
                   {showModal && (
                     <div
-                      className="absolute right-0 w-40  bg-primary-color  border rounded shadow-lg"
+                      className="absolute right-0 w-48 top-12  bg-white   border-[1px]  border-main-text shadow-lg"
                       onMouseEnter={() =>
                         clearTimeout(closeModalTimeout.current)
                       }
                       onMouseLeave={handleMouseLeave}
                     >
-                      <div className="p-2 border-main-text rounded-md m-1 border-2">
+                      <div className="p-2  m-1 ">
                         {/* <h2 className="text-xl mb-4">Profile</h2> */}
                         <ul>
-                          <li className="mb-2 cursor-pointer flex hover:text-[#FE2C54] text-[#f08ea0] items-center">
-                            <FaUser className="mr-2 cursor-pointer text-main-text" />
-                            Profile Details
-                          </li>
-                          <li className="mb-2 cursor-pointer flex hover:text-[#FE2C54] text-[#f08ea0] items-center">
-                            <FaInfoCircle className="mr-2 cursor-pointer text-main-text" />
+                          <Link
+                            href={"/profile"}
+                            className="mb-2 font-serif cursor-pointer flex hover:text-gray-500  text-main-text  items-center"
+                          >
+                            <FaUser className="mr-2 cursor-pointer " />
+                           My Account
+                          </Link>
+                          {/* <Link
+                            href={"/"}
+                            className="mb-2 font-serif cursor-pointer flex text-gray-500  hover:text-main-text  items-center"
+                          >
+                            <FaInfoCircle className="mr-2 cursor-pointer " />
                             About
-                          </li>
-                          <li className="mb-2 cursor-pointer flex hover:text-[#FE2C54] text-[#f08ea0] items-center">
-                            <FaSignOutAlt className="mr-2 cursor-pointer text-main-text" />
-                            Logout
-                          </li>
-                          <li className="mb-2 cursor-pointer flex hover:text-[#FE2C54] text-[#f08ea0] items-center">
-                            <FaSignInAlt className="mr-2 cursor-pointer text-main-text" />
+                          </Link> */}
+                          <Link
+                            href={"/"}
+                            className="mb-2 font-serif cursor-pointer flex hover:text-gray-500  text-main-text  items-center"
+                          >
+                            <FaSignOutAlt className="mr-2 cursor-pointer " />
+                            LogOut
+                          </Link>
+                          {/* <Link
+                            href={"/login"}
+                            className="mb-2 font-serif cursor-pointer flex text-gray-500  hover:text-main-text  items-center"
+                          >
+                            <FaSignInAlt className="mr-2 cursor-pointer " />
                             Login
-                          </li>
-                          <li className="mb-2 cursor-pointer flex hover:text-[#FE2C54] text-[#f08ea0] items-center">
-                            <FaUserPlus className="mr-2 cursor-pointer text-main-text" />
+                          </Link> */}
+                          {/* <Link
+                            href={"/"}
+                            className="mb-2 font-serif cursor-pointer flex text-gray-500  hover:text-main-text  items-center"
+                          >
+                            <FaUserPlus className="mr-2 cursor-pointer " />
                             Signup
-                          </li>
+                          </Link> */}
                         </ul>
                       </div>
                     </div>

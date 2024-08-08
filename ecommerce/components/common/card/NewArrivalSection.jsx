@@ -25,8 +25,9 @@ const NewArrivalsSectionNew = ({
           </div>
           <Link
             href={`/category/${newArrivalsSectionData?.categoryHandle}?page=1`}
-            className="w-[40px] h-[40px] rounded-full bg-primary-color-0.8 flex justify-center items-center cursor-pointer"
+            className=" h-[40px] gap-2 rounded-full bg-primary-color-0.8 flex justify-center items-center cursor-pointer"
           >
+            <span className="text-base">View All</span>
             <MdChevronRight className="text-white-color" />
           </Link>
         </div>

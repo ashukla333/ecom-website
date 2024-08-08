@@ -22,7 +22,7 @@ const SimpleNameOfferCard = ({
         width={500}
         height={500}
         alt="Product_Image"
-        className={`${imgClassName}`}
+        className={`${imgClassName} hover-effect`}
         // unoptimized={true}
         onError={event => {
           event.target.src = "/images/MyDefaultProduct.png";

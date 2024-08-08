@@ -19,10 +19,12 @@ export default function RootLayout({ children }){
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1000);
 
     return () => clearTimeout(timer); 
   }, []);
+
+ 
   return (
     <html lang="en">
       <body className={jost.className}>

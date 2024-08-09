@@ -13,12 +13,19 @@ import { IoMdClose } from "react-icons/io";
 import { FaCrown, FaUser, FaUserPlus } from "react-icons/fa6";
 import SearchBar from "./input/SearchBar";
 import Link from "next/link";
-import { BiSolidHeartCircle, BiUser } from "react-icons/bi";
+import { BiSolidHeartCircle, BiUser, BiUserX } from "react-icons/bi";
+import { customAxiosGET } from "@/app/apis/methods";
+import { getUserApi, logOutUserApi } from "@/app/apis/list";
+
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { deleteCookie, setCookie } from "cookies-next";
 
 const Header = () => {
+  const router = useRouter();
   const [isSticky, setIsSticky] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const [userData, setUserData] = useState();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -54,6 +61,45 @@ const Header = () => {
     }, 700);
   };
 
+  const getUser = async () => {
+    try {
+      const result = await customAxiosGET("", getUserApi);
+      if (result.status) {
+        setUserData(result?.data);
+        localStorage.setItem("userInfo", JSON.stringify(result?.data));
+      } else {
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const LogOut = async () => {
+    try {
+      console.log("Logging out...");
+      const result = await customAxiosGET("", logOutUserApi);
+      if (result.status) {
+        localStorage.removeItem("userInfo");
+        toast.success(result?.message);
+        deleteCookie("AuthToken");
+        router.push("/login");
+      } else {
+        toast.error(result?.message);
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("An error occurred while logging out.");
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <nav
       className={`border-b shadow-primary-color shadow top-0 left-0 w-full ${
@@ -74,7 +120,7 @@ const Header = () => {
               Kingsvilla
             </Link> */}
             <Link
-              href={""}
+              href={"/"}
               className="text-2xl relative text-center uppercase text-ellipsis font-mono font-bold mb-5"
             >
               Kingsvilla
@@ -87,7 +133,7 @@ const Header = () => {
           <div className="flex-[0.2] p-2 ">
             <div className="flex items-center justify-evenly">
               <Link
-                href={"wishlist"}
+                href={"/wishlist"}
                 className="cursor-pointer text-main-text "
               >
                 <BiSolidHeartCircle
@@ -104,10 +150,12 @@ const Header = () => {
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <div className="flex gap-2 border-[2px]  border-main-text  px-5 py-1 rounded-[23px] items-center justify-center">
-                    <FaUser className="h-[19px] w-full" />{" "}
-                    <spam className="text-[18px] font-[700]">Aman</spam>
+                  <div className="flex gap-2 border-double border-2 bg-main-bg border-main-text p-2 rounded-full items-center justify-center w-10 h-10">
+                    <span className="text-[18px] font-[700] text-main-text capitalize">
+                      {userData?.name ? userData?.name.charAt(0) : <BiUser />}
+                    </span>
                   </div>
+
                   {showModal && (
                     <div
                       className="absolute right-0 w-48 top-12  bg-white   border-[1px]  border-main-text shadow-lg"
@@ -124,7 +172,7 @@ const Header = () => {
                             className="mb-2 font-serif cursor-pointer flex hover:text-gray-500  text-main-text  items-center"
                           >
                             <FaUser className="mr-2 cursor-pointer " />
-                           My Account
+                            My Account
                           </Link>
                           {/* <Link
                             href={"/"}
@@ -133,27 +181,37 @@ const Header = () => {
                             <FaInfoCircle className="mr-2 cursor-pointer " />
                             About
                           </Link> */}
-                          <Link
-                            href={"/"}
-                            className="mb-2 font-serif cursor-pointer flex hover:text-gray-500  text-main-text  items-center"
-                          >
-                            <FaSignOutAlt className="mr-2 cursor-pointer " />
-                            LogOut
-                          </Link>
-                          {/* <Link
-                            href={"/login"}
-                            className="mb-2 font-serif cursor-pointer flex text-gray-500  hover:text-main-text  items-center"
-                          >
-                            <FaSignInAlt className="mr-2 cursor-pointer " />
-                            Login
-                          </Link> */}
-                          {/* <Link
-                            href={"/"}
-                            className="mb-2 font-serif cursor-pointer flex text-gray-500  hover:text-main-text  items-center"
-                          >
-                            <FaUserPlus className="mr-2 cursor-pointer " />
-                            Signup
-                          </Link> */}
+                          {userData?.name && (
+                            <div
+                              onClick={() => {
+                                LogOut();
+                              }}
+                              className="mb-2 font-serif cursor-pointer flex hover:text-gray-500  text-main-text  items-center"
+                            >
+                              <FaSignOutAlt className="mr-2 cursor-pointer " />
+                              LogOut
+                            </div>
+                          )}
+                          {!userData?.name ? (
+                            <>
+                              <Link
+                                href={"/login"}
+                                className="mb-2 font-serif cursor-pointer flex hover:text-gray-500  text-main-text  items-center"
+                              >
+                                <FaSignInAlt className="mr-2 cursor-pointer " />
+                                Login
+                              </Link>
+                              <Link
+                                href={"/signup"}
+                                className="mb-2 font-serif cursor-pointer flex hover:text-gray-500  text-main-text  items-center"
+                              >
+                                <FaUserPlus className="mr-2 cursor-pointer " />
+                                Sign Up
+                              </Link>
+                            </>
+                          ) : (
+                            ""
+                          )}
                         </ul>
                       </div>
                     </div>

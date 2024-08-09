@@ -1,3 +1,4 @@
+
 const Content = ({
     text,
     variant = 3,

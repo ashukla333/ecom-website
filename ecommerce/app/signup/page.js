@@ -3,8 +3,13 @@ import Image from "next/image";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaCrown } from "react-icons/fa6";
+import { signUpApi } from "../apis/list";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { customAxiosPOST } from "../apis/methods";
 
 const SignUpPage = () => {
+  const router=useRouter()
   const {
     register,
     handleSubmit,
@@ -12,20 +17,32 @@ const SignUpPage = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    if (data.password !== data.confirmPassword) {
-      alert("Passwords do not match");
-      return;
+  const onSubmit = async (data) => {
+    try {
+      if (data.password !== data.confirmPassword) {
+        toast.error("Passwords do not match");
+      } else {
+        const result = await customAxiosPOST("", signUpApi, data);
+        if (result?.status) {
+          reset();
+          toast.success(result?.message);
+          router.push("/login");
+        } else {
+          toast.error(result?.status);
+          console.log("Login failed: ", result.message);
+        }
+      }
+    } catch (error) {
+      // toast.error(error);
+      console.log("Error logging in: ", error);
     }
-    console.log(data);
-    reset(); // Reset form fields after submission
   };
 
   return (
     <div className="flex flex-1 flex-row w-full h-screen">
       <div className="md:flex-[0.35] md:block hidden w-full h-screen">
         <Image
-          src="/images/signup.jpg"
+          src={`${process.env.BASE_URL}/images/signup.jpg`}
           height={1000}
           width={1000}
           alt="Image"
@@ -46,7 +63,7 @@ const SignUpPage = () => {
               <label className="block text-gray-700">Username</label>
               <input
                 className={`w-full p-2 border ${
-                  errors.username ? "border-red-500" : "border-gray-300"
+                  errors.name ? "border-red-500" : "border-gray-300"
                 } rounded mt-1`}
                 type="text"
                 {...register("username", { required: "Username is required" })}

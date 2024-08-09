@@ -17,7 +17,7 @@ const Page = () => {
       ) : (
         <div className="flex justify-center text-center flex-col items-center w-[400px] h-[400px]">
           <Image
-            src="/noimg.gif"
+            src={`${process.env.BASE_URL}/noimg.gif`}
             height={500}
             width={500}
             alt="No Image"

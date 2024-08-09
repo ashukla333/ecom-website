@@ -13,7 +13,7 @@ const ProductCard = ({ value, ...props }) => {
           href={`/product/${value?.handle}?product=${value?.id}`}
         >
           <Image
-            src={value["image"]}
+            src={`${process.env.BASE_URL}${value["image"]}`}
             height={500}
             width={500}
             alt="img"

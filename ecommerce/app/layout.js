@@ -4,8 +4,11 @@ import Layout from "@/components/layout/Layout";
 
 import { AppProps } from 'next/app';
 import { Inter ,Jost} from '@next/font/google';
-import { useEffect, useState } from "react";
-import Loader from "@/components/common/Loader";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// import { useEffect, useState } from "react";
+// import Loader from "@/components/common/Loader";
 
 // export const metadata = {
 //   title: "Create Next App",
@@ -14,23 +17,35 @@ import Loader from "@/components/common/Loader";
 const jost = Jost({ subsets: ['latin'] });
 
 export default function RootLayout({ children }){
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 1000);
 
-    return () => clearTimeout(timer); 
-  }, []);
+  //   return () => clearTimeout(timer); 
+  // }, []);
 
  
   return (
     <html lang="en">
       <body className={jost.className}>
         <Layout>
-        {loading ? <Loader /> : children}
+        {/* {loading ? <Loader /> : children} */}
+        {children}
         </Layout>
+        <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            draggable
+            pauseOnHover
+            theme="dark"
+          />
       </body>
     </html>
   );

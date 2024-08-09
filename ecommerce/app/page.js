@@ -5,7 +5,10 @@ import NewArrivalsSectionNew from "@/components/common/card/NewArrivalSection";
 import { product, product2 } from "@/components/json";
 import React from "react";
 
+
+
 const Page = () => {
+ 
   return (
     <div className="">
       <MainHomePageBanner
@@ -20,9 +23,9 @@ const Page = () => {
             // "/images/banner3.png",
           ],
           mobileBanner: [
-            "/images/bannerMobile1.png",
-            "/images/bannerMobile2.png",
-            "/images/bannerMobile3.png",
+            "/images/loginscreen.jpg",
+            "/images/signup.jpg",
+            "/images/login.jpg",
           ],
         }}
       />
@@ -42,6 +45,7 @@ const Page = () => {
         // offerClass="hidden"
         newArrivalsSectionData={product2}
       />
+ 
     </div>
   );
 };

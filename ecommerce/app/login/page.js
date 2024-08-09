@@ -1,10 +1,17 @@
-"use client";
+"use client"
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FaCrown } from "react-icons/fa6";
+import { customAxiosGET, customAxiosPOST } from "../apis/methods";
+import { loginApi } from "../apis/list";
+import { setCookie } from "cookies-next";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+
 
 const LoginPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -12,16 +19,38 @@ const LoginPage = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    reset(); // Reset form fields after submission
+  // const token = null;
+  // const Cookies = () => {
+  //   token = Cookies.get("token");
+  // };
+
+  const onSubmit = async (data) => {
+    try {
+      const result = await customAxiosPOST("", loginApi, data);
+      if (result?.status) {
+        reset();
+        toast.success(result?.message);
+        setCookie("AuthToken", result?.token, {
+          maxAge: 24 * 60 * 60,
+        });
+        router.push("/");
+      } else {
+
+        toast.error("Incorrect password");
+        console.log("Login failed: ", result.message);
+      }
+    } catch (error) {
+      // toast.error(error);
+      console.log("Error logging in: ", error);
+    }
   };
 
   return (
     <div className="flex flex-1 bg-main-bg h-screen flex-row w-full">
       <div className="md:flex-[0.35] md:block hidden w-full h-screen">
         <Image
-          src="/images/loginscreen.jpg"
+        // onClick={()=>{router.push('/')}}
+          src={`${process.env.BASE_URL}/images/loginscreen.jpg`}
           height={1000}
           width={1000}
           alt="Image"
@@ -43,7 +72,7 @@ const LoginPage = () => {
             <h2 className="text-2xl relative text-center uppercase text-ellipsis font-mono font-bold mb-5">
               Kingsvilla
             </h2>
-              <FaCrown className="text-yellow-500 text-lg absolute md:left-28 left-20 top-0 -rotate-45" />
+            <FaCrown className="text-yellow-500 text-lg absolute md:left-28 left-20 top-0 -rotate-45" />
           </div>
           <h2 className="text-2xl font-bold mb-5">Login to your account</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -65,7 +94,7 @@ const LoginPage = () => {
             <div className="mb-4">
               <label className="block text-gray-700">Password</label>
               <input
-                className={`w-full p-2 border ${
+                className={`w-full text-lg p-2 border ${
                   errors.password ? "border-red-500" : "border-gray-300"
                 } rounded mt-1`}
                 type="password"

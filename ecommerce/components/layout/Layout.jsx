@@ -17,7 +17,6 @@ export default function Layout({ children }) {
     }
   };
 
-  
   return layOutFunction(router) ? (
     <> {children}</>
   ) : (

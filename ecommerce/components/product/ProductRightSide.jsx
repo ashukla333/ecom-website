@@ -12,7 +12,6 @@ const ProductRightSide = ({ rating = 4 }) => {
     Math.min(totalStars, Number.parseInt(rating, 10) || 0)
   );
   const [selectedSize, setSelectedSize] = useState(null);
-  console.log({ selectedSize });
   const handleSizeChange = (size) => {
     setSelectedSize(size); // Update the state with the selected size
   };

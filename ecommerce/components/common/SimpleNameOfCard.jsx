@@ -13,12 +13,13 @@ const SimpleNameOfferCard = ({
   price,
   pricecss,
 }) => {
+ 
   return (
     <div
       className={`w-full !h-full ${className}  border-[0.05rem] border-secondary-primary-color`}
     >
       <Image
-        src={image}
+        src={`${process.env.BASE_URL}${image}`}
         width={500}
         height={500}
         alt="Product_Image"

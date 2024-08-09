@@ -47,7 +47,7 @@ const MainHomePageBanner = ({ bannerData = [] }) => {
                 <SwiperSlide className="aspect-[16/5]" key={index}>
                   <div className="relative !aspect-[16/5]">
                     <Image
-                      src={banner}
+                      src={`${process.env.BASE_URL}${banner}`}
                       width={500}
                       height={500}
                       className="w-full !h-full !object-cover"
@@ -90,12 +90,12 @@ const MainHomePageBanner = ({ bannerData = [] }) => {
           : bannerData?.mobileBanner?.map((banner, index) => {
               return (
                 <SwiperSlide className="" key={index}>
-                  <div className="relative">
+                  <div className="relative h-[500px] w-full">
                     <Image
-                      src={banner}
+                      src={`${process.env.BASE_URL}${banner}`}
                       width={1000}
                       height={2000}
-                      className="aspcect-[1/2] object-fill"
+                      className="h-full w-full object-fill"
                       alt="bannerImage"
                     ></Image>
 

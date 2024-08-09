@@ -7,7 +7,7 @@ const ProductLeftSide = () => {
     <div>
       <div className="w-full border-2 border-main-text overflow-hidden h-[250px] md:!h-[500px] ">
         <Image
-          src={"/products/p11.jpg"}
+          src={`${process.env.BASE_URL}/products/p11.jpg`}
           height={500}
           width={500}
           alt="product Image"
@@ -19,7 +19,7 @@ const ProductLeftSide = () => {
     product2?.products?.slice(1,5)?.map((value,index)=>{
         return  <div key={index} className="w-full border-2 border-main-text overflow-hidden h-[50px] md:!h-[100px] ">
         <Image
-          src={value?.image}
+          src={`${process.env.BASE_URL}${value?.image}`}
           height={500}
           width={500}
           alt="product Image"

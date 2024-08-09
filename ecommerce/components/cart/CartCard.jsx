@@ -7,7 +7,7 @@ import Button from "../common/Button";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
 const CartCard = ({ Increment = 0, setIncrement = () => {} }) => {
-  console.log(Increment);
+ 
 
   return (
     <div className="w-full h-full border bg-main-bg text-main-text">
@@ -16,7 +16,7 @@ const CartCard = ({ Increment = 0, setIncrement = () => {} }) => {
           <div className="md:w-[400px] !w-full  h-[200px] ">
             <Image
               alt="cart"
-              src={"/products/p11.jpg"}
+              src={`${process.env.BASE_URL}/products/p11.jpg`}
               width={500}
               height={500}
               className="h-full  border border-main-text hover-effect w-full object-cover "

@@ -10,7 +10,7 @@ const OrderCard = () => {
           <div className="w-[100px]   h-[100px] ">
             <Image
               alt="cart"
-              src={"/products/p11.jpg"}
+              src={`${process.env.BASE_URL}/products/p11.jpg`}
               width={500}
               height={500}
               className="h-full  border border-main-text hover-effect w-full object-cover "

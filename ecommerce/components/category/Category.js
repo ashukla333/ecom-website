@@ -57,13 +57,13 @@ const Category = () => {
   };
   return (
     <div>
-      <Image
-        src={"/images/categoryPageImg.jpg"}
+      {/* <Image
+        src={`${process.env.BASE_URL}/images/categoryPageImg.jpg`}
         alt="img"
         height={1000}
         width={1000}
         className="h-full w-full"
-      />
+      /> */}
       <div className=" p-2 bg-main-bg border  ">
         <div
           className="flex py-2 justify-end"

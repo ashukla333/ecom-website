@@ -4,6 +4,7 @@ import { FaShoppingCart, FaListAlt, FaCogs } from "react-icons/fa"; // Import ic
 import { FaBox, FaChartBar, FaTag, FaUsers } from "react-icons/fa6";
 import Product from "./product/page";
 import Category from "./category/page";
+import Brand from "./brand/page";
 
 const tabs = [
   {
@@ -14,6 +15,7 @@ const tabs = [
   },
   {
     name: "Brand",
+    component: <Brand />,
     content: "This is the Brand page content.",
     icon: <FaTag />,
   },
@@ -81,8 +83,7 @@ const Dashboard = () => {
       </div>
 
       {/* Right Side - Main Content */}
-      <div className="flex-[85%] bg-white p-4">
-        <h1 className="text-2xl font-bold mb-4">Dashboard Content</h1>
+      <div className="flex-[85%] h-[80%] overflow-y-auto bg-white p-4">
         {renderContent()}
       </div>
     </div>

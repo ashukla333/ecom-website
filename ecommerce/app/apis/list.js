@@ -12,3 +12,21 @@ export const createCategoryApi = "/v1/category/createCategory";
 export const getCategoryApi = "/v1/category/getCategory";
 export const getCategoryByIdApi = (id) => `/v1/category/getCategoryByID/${id}`;
 export const categoryApi = (id) => `/v1/category/${id}`;
+
+
+// brand
+export const createBrandApi = "/v1/brand/createBrand";
+export const getBrandApi = "/v1/brand/getBrand";
+export const getBrandByIdApi = (id) => `/v1/brand/getBrandByID/${id}`;
+export const brandApi = (id) => `/v1/brand/${id}`;
+
+
+//product
+export const createProductApi = "/v1/product/createProduct";
+export const getproductApi = "/v1/product/getproduct";
+export const getproductByIdApi = (id) => `/v1/product/${id}`;
+export const productApi = (id) => `/v1/product/${id}`;
+
+
+
+

@@ -236,9 +236,9 @@ const Category = () => {
           <div className="absolute bottom-3 right-3">
             <button
               type="submit"
-              className={`bg-${
-                modalState.type === "edit" ? "green" : "blue"
-              }-500 flex gap-3 items-center text-white p-2 rounded`}
+              className={`
+                ${modalState.type === "edit" ? "bg-green-500" : "bg-blue-500"}
+               flex gap-3 items-center text-white p-2 rounded`}
             >
               {modalState.type === "edit" ? <FaEdit /> : <FaPlus />}{" "}
               {modalState.type === "edit" ? "Save Changes" : "Add Category"}

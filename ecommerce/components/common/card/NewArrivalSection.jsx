@@ -35,19 +35,20 @@ const NewArrivalsSectionNew = ({
         </div>
         <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 lg:grid-cols-6">
           {newArrivalsSectionData?.productData?.map((product, index) => {
-            let { images, name,price, offersDescription, handle, _id } = product;
+            let { images, name,price, offer,offersDescription, handle, _id } = product;
             return (
               <Link href={`/product/${_id}`} key={index}>
                 <Card className=" overflow-hidden w-full border-[0.05rem] border-main-text cursor-pointer">
                   <SimpleNameOfferCard
-                    image={images[0]?.url}
+                    image={images}
                     title={name}
+                    offer={offer}
                     price={price}
                     offerClass={offerClass}
                     pricecss={pricecss}
                     imgClassName={`${imgClassName} `}
                     navigateArrowIcon={navigateArrowIcon}
-                    offer={offersDescription}
+                    // offer={offersDescription}
                   />
                 </Card>
               </Link>

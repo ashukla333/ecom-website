@@ -13,7 +13,9 @@ const NewArrivalsSectionNew = ({
   pricecss,
   offerClass = "",
   price,
+  CategoryID
 }) => {
+  console.log({newArrivalsSectionData})
   return (
     <>
       <div className="py-4 text-main-text">
@@ -24,7 +26,7 @@ const NewArrivalsSectionNew = ({
             {title}
           </div>
           <Link
-            href={`/category/${newArrivalsSectionData?.categoryHandle}?page=1`}
+            href={`/category/${CategoryID}?page=1`}
             className=" h-[40px] gap-2 rounded-full bg-primary-color-0.8 flex justify-center items-center cursor-pointer"
           >
             <span className="text-base">View All</span>
@@ -32,13 +34,13 @@ const NewArrivalsSectionNew = ({
           </Link>
         </div>
         <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 lg:grid-cols-6">
-          {newArrivalsSectionData?.products?.map((product, index) => {
-            let { image, name, offersDescription, handle, id } = product;
+          {newArrivalsSectionData?.productData?.map((product, index) => {
+            let { images, name,price, offersDescription, handle, _id } = product;
             return (
-              <Link href={`/product/${handle}?product=${id}`} key={index}>
+              <Link href={`/product/${_id}`} key={index}>
                 <Card className=" overflow-hidden w-full border-[0.05rem] border-main-text cursor-pointer">
                   <SimpleNameOfferCard
-                    image={image}
+                    image={images[0]?.url}
                     title={name}
                     price={price}
                     offerClass={offerClass}

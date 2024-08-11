@@ -10,10 +10,10 @@ const ProductCard = ({ value, ...props }) => {
       <div className="border rounded-sm border-main-text flex flex-col !h-[350px] w-full ">
         <Link
           className="border cursor-pointer rounded-sm !h-[240px] w-full"
-          href={`/product/${value?.handle}?product=${value?.id}`}
+          href={`/product/${value?._id}`}
         >
           <Image
-            src={`${process.env.BASE_URL}${value["image"]}`}
+            src={`${value["images"][0].url}`}
             height={500}
             width={500}
             alt="img"
@@ -24,23 +24,23 @@ const ProductCard = ({ value, ...props }) => {
         <div className="flex flex-col p-2">
           <div className="flex  justify-between">
             <div className="font-bold text-main-text font-mono">
-              {value["name"]?.length > 10
-                ? value["name"].slice(0, 10) + "..."
+              {value["name"]?.length > 8
+                ? value["name"].slice(0, 8) + ".."
                 : value["name"]}
             </div>
-            <div className="text-main-text font-bold">{value["price"]}</div>
+            <div className="text-main-text font-bold">₹{Math.floor(value["price"])}</div>
           </div>
           {/*  */}
           <div className="flex py-1  justify-between">
             <div className="flex gap-1 items-center">
               <div className="font-bold text-main-text font-mono">
-                {value["rating"]}
+                {value["ratings"][0]?.rating||"5"}
               </div>
               <FaStar className="text-base text-yellow-400" />
               <span className="text-sm text-gray-300">Rating</span>
             </div>
-            <div className="text-red-600 text-sm line-through font-bold">
-              {value["offer"]}
+            <div className="text-red-600 text-sm line-through font-bold " >
+            ₹{value["offer"]|| "290"}
             </div>
           </div>
           <div className="flex items-center border-t py-2 justify-between">

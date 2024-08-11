@@ -27,7 +27,7 @@ export default function Layout({ children }) {
       </div>
       <div
         style={{ zIndex: "0" }}
-        className="w-full min-h-[100vh]  !z-[0] overflow-x-hidden"
+        className="w-full h-full  !z-[0] overflow-x-hidden"
       >
         {children}
       </div>

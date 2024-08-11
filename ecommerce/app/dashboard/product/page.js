@@ -241,7 +241,7 @@ const Product = () => {
                     {product?.name && product['name']}
                   </td>
                   <td className="border border-gray-300 text-center p-2">
-                    ${product?.price && product['price']}
+                  ₹{product?.price && product['price']}
                   </td>
                   <td className="border border-gray-300 text-center p-2">
                     {product?.stock && product['stock']}

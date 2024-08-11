@@ -19,11 +19,11 @@ const SimpleNameOfferCard = ({
       className={`w-full !h-full ${className}  border-[0.05rem] border-secondary-primary-color`}
     >
       <Image
-        src={`${process.env.BASE_URL}${image}`}
+        src={`${image}`}
         width={500}
         height={500}
         alt="Product_Image"
-        className={`${imgClassName} hover-effect`}
+        className={`${imgClassName}  !h-[260px] hover-effect`}
         // unoptimized={true}
         onError={event => {
           event.target.src = "/images/MyDefaultProduct.png";
@@ -51,7 +51,7 @@ const SimpleNameOfferCard = ({
             <p
               className={`w-full md:text-[16px] text-[14px]  font-[700] truncate ${pricecss}`}
             >
-              {price}
+              ₹{price}
             </p>
           )}
         </div>

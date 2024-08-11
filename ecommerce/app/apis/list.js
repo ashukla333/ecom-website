@@ -25,6 +25,7 @@ export const brandApi = (id) => `/v1/brand/${id}`;
 export const createProductApi = "/v1/product/createProduct";
 export const getproductApi = "/v1/product/getproduct";
 export const getproductByIdApi = (id) => `/v1/product/${id}`;
+export const getProductByCategoryIdApi = (id) => `/v1/product/ProductByCategoryId/${id}`;
 export const productApi = (id) => `/v1/product/${id}`;
 
 

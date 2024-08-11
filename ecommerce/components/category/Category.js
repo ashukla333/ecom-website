@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CategoryRightSide from "./CategoryRightSide";
 import Image from "next/image";
 import { MdFilterList } from "react-icons/md";
@@ -6,9 +6,16 @@ import Modal from "../common/Modal";
 import Content from "../common/Content";
 import { GrClear } from "react-icons/gr";
 import RangeSlider from "../common/input/priceRange";
+import { getProductByCategoryIdApi } from "@/app/apis/list";
+import { customAxiosGET } from "@/app/apis/methods";
+import { useParams } from "next/navigation";
+import { toast } from "react-toastify";
 
 const Category = () => {
+  const router=useParams()
+  console.log(router)
   const [filter, setFilter] = useState(false);
+  const [Product,setProduct]=useState([])
   const [FilterValue, setFilterValue] = useState({
     gender: { name: "All", id: "1" },
   });
@@ -55,6 +62,33 @@ const Category = () => {
     const { name } = e.target;
     setRating(name);
   };
+
+
+  const fetchProductByCategories = async () => {
+    try {
+      const response = await customAxiosGET(
+        "",
+        getProductByCategoryIdApi(router.id)
+      );
+      if (response.status) {
+        setProduct(response.data.productData);
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  useEffect(()=>{
+    fetchProductByCategories()
+  },[])
+
+
+  console.log({Product})
+
+
   return (
     <div>
       {/* <Image
@@ -81,7 +115,7 @@ const Category = () => {
           </div>
         </div>
         <div className=" border bg-white ">
-          <CategoryRightSide />
+          <CategoryRightSide Product={Product}/>
         </div>
       </div>
 

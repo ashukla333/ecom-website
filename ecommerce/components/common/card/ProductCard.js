@@ -1,14 +1,110 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BiSolidHeartCircle } from "react-icons/bi";
 import { FaStar } from "react-icons/fa6";
 import SwiperSlider from "../SwiperSlider";
 import { SwiperSlide } from "swiper/react";
+import {
+  createWishlistApi,
+  deleteWishlistApi,
+  getWishlistByIdApi,
+} from "@/app/apis/list";
+import {
+  customAxiosDELETE,
+  customAxiosGET,
+  customAxiosPOST,
+} from "@/app/apis/methods";
+import { toast } from "react-toastify";
+import useUserInfo from "@/app/apis/userInfo";
+import { useRouter } from "next/router";
+import Loader from "../Loader";
 
+const ProductCard = ({ value, wishlist = false }) => {
+  const userId = useUserInfo();
+  const [getProductWishList, setProductWishList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-const ProductCard = ({ value, ...props }) => {
-  return (
+  const AddWishList = async (data) => {
+    setLoading(true);
+    try {
+      const response = await customAxiosPOST("", createWishlistApi, data);
+      if (response.status) {
+        toast.success(response.message);
+        if (userId?.user?._id) {
+          getWishList(userId?.user?._id);
+        }
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+
+  const getWishList = async (id) => {
+    setLoading(true);
+    try {
+      const response = await customAxiosGET("", getWishlistByIdApi(id));
+      if (response.status) {
+        setProductWishList(response?.data?.products);
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      toast.error("Failed to fetch wishlist.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const RemoveWishList = async (data) => {
+    setLoading(true);
+    try {
+      const response = await customAxiosDELETE("", deleteWishlistApi, data);
+      if (response.status) {
+        toast.success(response.message);
+        if (userId?.user?._id) {
+          getWishList(userId?.user?._id);
+        }
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Failed to fetch wishlist.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const debouncedGetWishList = debounce(getWishList, 1000);
+
+  useEffect(() => {
+    if (userId?.user?._id) {
+      debouncedGetWishList(userId?.user?._id);
+    }
+  }, [userId?.user?._id]);
+
+  const wishlistActive = getProductWishList.includes(value?._id);
+
+  if (loading) {
+    return <div className="loader flex justify-center items-center " ><Loader/></div>;
+  }
+
+  return (wishlist && wishlistActive) || !wishlist ? (
     <div>
       <div className="border rounded-sm border-main-text flex flex-col !h-[350px] w-full">
         <Link
@@ -47,7 +143,9 @@ const ProductCard = ({ value, ...props }) => {
                 ? value["name"].slice(0, 8) + ".."
                 : value["name"]}
             </div>
-            <div className="text-main-text font-bold">₹{Math.floor(value["price"])}</div>
+            <div className="text-main-text font-bold">
+              ₹{Math.floor(value["price"])}
+            </div>
           </div>
           <div className="flex py-1 justify-between">
             <div className="flex gap-1 items-center">
@@ -86,11 +184,35 @@ const ProductCard = ({ value, ...props }) => {
                 <span className="p-2 text-[10px]">Add To Cart</span>
               </Link>
             </div>
-            <BiSolidHeartCircle fill="red" className="h-7 animate-pulse w-7" />
+            <div
+              className="cursor-pointer"
+              onClick={
+                wishlistActive
+                  ? () => {
+                      RemoveWishList({
+                        userId: userId?.user?._id,
+                        productId: value?._id,
+                      });
+                    }
+                  : () => {
+                      AddWishList({
+                        userId: userId?.user?._id,
+                        productId: value?._id,
+                      });
+                    }
+              }
+            >
+              <BiSolidHeartCircle
+                fill={wishlistActive ? "red" : "black"}
+                className="h-7 cursor-pointer  animate-pulse w-7"
+              />
+            </div>
           </div>
         </div>
       </div>
     </div>
+  ) : (
+    <></>
   );
 };
 

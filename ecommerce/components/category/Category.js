@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CategoryRightSide from "./CategoryRightSide";
-import { MdFilterList } from "react-icons/md";
+import { MdFilterList, MdFilterListOff } from "react-icons/md";
 import Modal from "../common/Modal";
 import Content from "../common/Content";
 import { GrClear } from "react-icons/gr";
@@ -9,6 +9,7 @@ import { getProductByCategoryIdApi } from "@/app/apis/list";
 import { customAxiosGET } from "@/app/apis/methods";
 import { useParams } from "next/navigation";
 import { toast } from "react-toastify";
+import { createUrlParamsFunction } from "@/helperFunction";
 
 const Category = () => {
   const { id } = useParams();
@@ -39,67 +40,53 @@ const Category = () => {
     setRating(parseInt(e.target.value));
   };
 
-  const createUrlParamsFunction = (urlObject = {}, restrictedValue = []) => {
-    return new URLSearchParams(
-      Object.fromEntries(
-        Object.entries(urlObject).filter(
-          ([_, v]) =>
-            [...[null, undefined, "ALL", ""], ...restrictedValue].includes(v) !=
-            true
-        )
-      )
-    ).toString();
-  };
-  
   const fetchProductByCategories = async () => {
     if (!id) {
       toast.error("Category ID is missing.");
       return;
     }
-  
+
     try {
-      // Construct query parameters object
       const queryParams = {
-        gender: filterValue.gender.name !== "All" ? filterValue.gender.name : undefined,
+        gender:
+          filterValue.gender.name !== "All"
+            ? filterValue.gender.name
+            : undefined,
         minPrice: values[0] !== 50 ? values[0] : undefined,
         maxPrice: values[1] !== 10000 ? values[1] : undefined,
-        minRating: rating ? rating : undefined
+        minRating: rating ? rating : undefined,
       };
-  
-      // Generate URL parameters string
+
       const queryString = createUrlParamsFunction(queryParams);
       const url = `/v1/product/ProductByCategoryId/${id}?${queryString}`;
-  
-      const response = await customAxiosGET("",url);
-  
+
+      const response = await customAxiosGET("", url);
+
       if (response.status) {
         setProducts(response.data.productData);
       } else {
-        // toast.error(response.message);
+        toast.error(response.message);
       }
     } catch (error) {
       console.log(error);
       toast.error("An error occurred while fetching products.");
     }
   };
-  
-  
-  
 
   useEffect(() => {
-    fetchProductByCategories();
-  }, [filterValue, rating, values]); // Fetch products whenever filters change
+    const handler = setTimeout(() => {
+      fetchProductByCategories();
+    }, 3000); // 300ms delay for debouncing
+
+    return () => {
+      clearTimeout(handler); // Clear timeout if filters change before delay ends
+    };
+  }, [filterValue, rating, values]);
+
+  
 
   return (
     <div>
-      {/* Optional Image */}
-      {/* <Image
-        src={`${process.env.BASE_URL}/images/categoryPageImg.jpg`}
-        alt="img"
-        height={1000}
-        width={1000}
-        className="h-full w-full"
-      /> */}
       <div className="p-2 bg-main-bg border">
         <div
           className="flex py-2 justify-end"
@@ -140,19 +127,6 @@ const Category = () => {
               variant={6}
               text={"Filter Product"}
             />
-          </div>
-          <div className="flex justify-end p-2">
-            <div
-              className="text-white flex items-center gap-2 cursor-pointer bg-main-text px-3 py-2 rounded-md"
-              onClick={() => {
-                setValues([50, 10000]); // Reset to default price range
-                setRating(null);
-                setFilterValue({ gender: { name: "All", id: "1" } });
-              }}
-            >
-              <GrClear />
-              <span>Clear Filter</span>
-            </div>
           </div>
           <div className="p-2">
             <Content
@@ -210,6 +184,19 @@ const Category = () => {
                   {value.name}
                 </div>
               ))}
+            </div>
+          </div>{" "}
+          <div className="flex w-full absolute bottom-1 justify-end p-2">
+            <div
+              className="text-white flex w-full justify-center items-center gap-2 cursor-pointer bg-main-text px-3 py-2 rounded-md"
+              onClick={() => {
+                setValues([0, 10000]);
+                setRating(null);
+                setFilterValue({ gender: { name: "All", id: "1" } });
+              }}
+            >
+              <MdFilterListOff />
+              <span>Clear Filter</span>
             </div>
           </div>
         </Modal>

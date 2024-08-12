@@ -3,7 +3,7 @@ import { Range, getTrackBackground } from 'react-range';
 
 const RangeSlider = ({ max = 100, min = 0, values = [0], setValues }) => {
   return (
-    <div style={{ width: '100%', padding: '20px' }}>
+    <div style={{ width: '100%', paddingLeft: '20px',paddingRight:'20px',paddingTop:'14px' }}>
       <Range
         step={1}
         min={min}

@@ -309,6 +309,7 @@ const Product = () => {
                       checked={product?.isActive}
                       readOnly
                     />
+                    
                   </td>
                   <td className="border border-gray-300 text-center p-2 flex items-center justify-center gap-2">
                     <button

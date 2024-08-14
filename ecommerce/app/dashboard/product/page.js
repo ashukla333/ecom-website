@@ -15,8 +15,8 @@ import Image from "next/image";
 import useUserInfo from "@/app/apis/userInfo";
 
 const Product = () => {
-  const userID=useUserInfo()
-  console.log({userID})
+  const userID = useUserInfo();
+  console.log({ userID });
   const [products, setProducts] = useState([]);
   const [brands, setBrands] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -39,28 +39,48 @@ const Product = () => {
       description: "",
       price: 0,
       offer: 0,
-      ratings: [{
-        user: userID?.user?._id, // Default value for user ID
-        rating: 0,
-        comment: "Great product!",
-      }],
+      ratings: [
+        {
+          user: userID?.user?._id, // Default value for user ID
+          rating: 1,
+          comment: "Great product!",
+        },
+      ],
       gender: "",
       category: "",
       brand: "",
       stock: 0,
       images: [{ url: "", altText: "" }],
+      sizes: [{ size: "", stock: 0 }],
       isActive: true,
     },
   });
 
-  const { fields: imageFields, append: appendImage, remove: removeImage } = useFieldArray({
+  const {
+    fields: imageFields,
+    append: appendImage,
+    remove: removeImage,
+  } = useFieldArray({
     control,
     name: "images",
   });
 
-  const { fields: ratingFields, append: appendRating, remove: removeRating } = useFieldArray({
+  const {
+    fields: ratingFields,
+    append: appendRating,
+    remove: removeRating,
+  } = useFieldArray({
     control,
     name: "ratings",
+  });
+
+  const {
+    fields: sizeFields,
+    append: appendSize,
+    remove: removeSize,
+  } = useFieldArray({
+    control,
+    name: "sizes",
   });
 
   const fetchProducts = async () => {
@@ -120,16 +140,19 @@ const Product = () => {
         description: "",
         price: 0,
         offer: 0,
-        ratings: [{
-          user: userID?.user?._id, // Default value for user ID
-          rating: 0,
-          comment: "Great product!",
-        }],
+        ratings: [
+          {
+            user: userID?.user?._id, // Default value for user ID
+            rating: 1,
+            comment: "Great product!",
+          },
+        ],
         gender: "",
         category: "",
         brand: "",
         stock: 0,
         images: [{ url: "", altText: "" }],
+        sizes: [{ size: "", stock: 0 }],
         isActive: true,
       }
     );
@@ -141,6 +164,9 @@ const Product = () => {
       }
       if (product.ratings && product.ratings.length > 0) {
         setValue("ratings", product.ratings);
+      }
+      if (product.sizes && product.sizes.length > 0) {
+        setValue("sizes", product.sizes);
       }
     }
   };
@@ -184,6 +210,7 @@ const Product = () => {
         );
         setProducts(updatedProducts);
         closeModal();
+        fetchProducts();
         toast.success(response.message || "Product updated successfully.");
       } else {
         toast.error(response.message);
@@ -193,21 +220,24 @@ const Product = () => {
     }
   };
 
-  const handleDeleteProduct = async () => {
+  const handleDeleteProduct = async (modalState) => {
     try {
       const response = await customAxiosDELETE(
         "",
-        productApi(modalState.product._id)
+        productApi(modalState)
       );
       if (response.status) {
         setProducts(products.filter((p) => p._id !== modalState.product._id));
         closeModal();
         toast.success(response.message);
+        fetchProducts();
       } else {
         toast.error(response.message);
       }
     } catch (error) {
-      toast.error("Failed to delete product.");
+      fetchProducts();
+      console.log(error)
+      // toast.error("Failed to delete product.");
     }
   };
 
@@ -250,7 +280,7 @@ const Product = () => {
                     <Image
                       height={50}
                       width={50}
-                      src={product?.images[0]?.url || ""}
+                      src={product?.images[0]?.url || ``}
                       alt={product?.images[0]?.altText || "Product Image"}
                       className="h-full w-full"
                     />
@@ -288,7 +318,7 @@ const Product = () => {
                       <FaEdit />
                     </button>
                     <button
-                      onClick={() => handleDeleteProduct(product._id)}
+                      onClick={() => handleDeleteProduct(product?._id)}
                       className="text-red-500 hover:text-red-700"
                     >
                       <FaTrash />
@@ -301,11 +331,13 @@ const Product = () => {
       </div>
 
       {modalState.open && (
-        <Modal open={modalState.open}
-        setModelOpen={closeModal}
-        modelContentCss={`!w-[800px] !overflow-y-auto ${
-          modalState.type === "delete" && "!h-[200px]"
-        } p-5 border border-main-text bg-main-bg`}>
+        <Modal
+          open={modalState.open}
+          setModelOpen={closeModal}
+          modelContentCss={`!w-[800px] !overflow-y-auto ${
+            modalState.type === "delete" && "!h-[200px]"
+          } p-5 border border-main-text bg-main-bg`}
+        >
           <h3 className="text-xl font-semibold mb-4">
             {modalState.type === "add" ? "Add New Product" : "Edit Product"}
           </h3>
@@ -316,18 +348,24 @@ const Product = () => {
             )}
           >
             <div className="mb-4">
-              <label htmlFor="name" className="block mb-1">Product Name</label>
+              <label htmlFor="name" className="block mb-1">
+                Product Name
+              </label>
               <input
                 type="text"
                 id="name"
                 {...register("name", { required: "Name is required" })}
                 className="border border-gray-300 p-2 w-full"
               />
-              {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+              {errors.name && (
+                <p className="text-red-500">{errors.name.message}</p>
+              )}
             </div>
 
             <div className="mb-4">
-              <label htmlFor="description" className="block mb-1">Description</label>
+              <label htmlFor="description" className="block mb-1">
+                Description
+              </label>
               <textarea
                 id="description"
                 {...register("description")}
@@ -336,18 +374,24 @@ const Product = () => {
             </div>
 
             <div className="mb-4">
-              <label htmlFor="price" className="block mb-1">Price</label>
+              <label htmlFor="price" className="block mb-1">
+                Price
+              </label>
               <input
                 type="number"
                 id="price"
                 {...register("price", { required: "Price is required" })}
                 className="border border-gray-300 p-2 w-full"
               />
-              {errors.price && <p className="text-red-500">{errors.price.message}</p>}
+              {errors.price && (
+                <p className="text-red-500">{errors.price.message}</p>
+              )}
             </div>
 
             <div className="mb-4">
-              <label htmlFor="offer" className="block mb-1">Offer (%)</label>
+              <label htmlFor="offer" className="block mb-1">
+                Offer (%)
+              </label>
               <input
                 type="number"
                 id="offer"
@@ -357,7 +401,9 @@ const Product = () => {
             </div>
 
             <div className="mb-4">
-              <label htmlFor="gender" className="block mb-1">Gender</label>
+              <label htmlFor="gender" className="block mb-1">
+                Gender
+              </label>
               <select
                 id="gender"
                 {...register("gender")}
@@ -371,7 +417,9 @@ const Product = () => {
             </div>
 
             <div className="mb-4">
-              <label htmlFor="category" className="block mb-1">Category</label>
+              <label htmlFor="category" className="block mb-1">
+                Category
+              </label>
               <select
                 id="category"
                 {...register("category", { required: "Category is required" })}
@@ -384,11 +432,15 @@ const Product = () => {
                   </option>
                 ))}
               </select>
-              {errors.category && <p className="text-red-500">{errors.category.message}</p>}
+              {errors.category && (
+                <p className="text-red-500">{errors.category.message}</p>
+              )}
             </div>
 
             <div className="mb-4">
-              <label htmlFor="brand" className="block mb-1">Brand</label>
+              <label htmlFor="brand" className="block mb-1">
+                Brand
+              </label>
               <select
                 id="brand"
                 {...register("brand", { required: "Brand is required" })}
@@ -401,22 +453,30 @@ const Product = () => {
                   </option>
                 ))}
               </select>
-              {errors.brand && <p className="text-red-500">{errors.brand.message}</p>}
+              {errors.brand && (
+                <p className="text-red-500">{errors.brand.message}</p>
+              )}
             </div>
 
             <div className="mb-4">
-              <label htmlFor="stock" className="block mb-1">Stock</label>
+              <label htmlFor="stock" className="block mb-1">
+                Stock
+              </label>
               <input
                 type="number"
                 id="stock"
                 {...register("stock", { required: "Stock is required" })}
                 className="border border-gray-300 p-2 w-full"
               />
-              {errors.stock && <p className="text-red-500">{errors.stock.message}</p>}
+              {errors.stock && (
+                <p className="text-red-500">{errors.stock.message}</p>
+              )}
             </div>
 
             <div className="mb-4">
-              <label htmlFor="isActive" className="block mb-1">Active</label>
+              <label htmlFor="isActive" className="block mb-1">
+                Active
+              </label>
               <input
                 type="checkbox"
                 id="isActive"
@@ -453,9 +513,7 @@ const Product = () => {
               ))}
               <button
                 type="button"
-                onClick={() =>
-                  appendImage({ url: "", altText: "" })
-                }
+                onClick={() => appendImage({ url: "", altText: "" })}
                 className="bg-green-500 text-white p-2 rounded"
               >
                 Add Image
@@ -475,11 +533,15 @@ const Product = () => {
                     />
                     <input
                       type="number"
-                      {...register(`ratings.${index}.rating`)}
+                      {...register(`ratings.${index}.rating`, { required: "rating is required" })}
                       placeholder="Rating (1-5)"
                       className="border border-gray-300 p-2 w-full"
                     />
                   </div>
+                  {errors.ratings && (
+                <p className="text-red-500">{errors.ratings.message}</p>
+              )}
+
                   <textarea
                     {...register(`ratings.${index}.comment`)}
                     placeholder="Comment"
@@ -497,11 +559,49 @@ const Product = () => {
               <button
                 type="button"
                 onClick={() =>
-                  appendRating({ user: "", rating: 0, comment: "Great product!" })
+                  appendRating({
+                    user: "",
+                    rating: 0,
+                    comment: "Great product!",
+                  })
                 }
                 className="bg-green-500 text-white p-2 rounded"
               >
                 Add Rating
+              </button>
+            </div>
+
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold mb-2">Sizes and Stock</h3>
+              {sizeFields.map((item, index) => (
+                <div key={item.id} className="flex gap-2 mb-2">
+                  <input
+                    type="text"
+                    {...register(`sizes.${index}.size`, { required: true })}
+                    placeholder="Size"
+                    className="border p-2 rounded w-1/2"
+                  />
+                  <input
+                    type="number"
+                    {...register(`sizes.${index}.stock`, { required: true })}
+                    placeholder="Stock"
+                    className="border p-2 rounded w-1/2"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeSize(index)}
+                    className="bg-red-500 text-white p-2 rounded"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => appendSize({ size: "", stock: 0 })}
+                className="bg-blue-500 text-white p-2 rounded flex items-center gap-2"
+              >
+                <FaPlus /> Add Size
               </button>
             </div>
 

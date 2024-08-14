@@ -101,12 +101,17 @@ const ProductCard = ({ value, wishlist = false }) => {
   const wishlistActive = getProductWishList.includes(value?._id);
 
   if (loading) {
-    return <div className="loader flex justify-center items-center " ><Loader/></div>;
+    return (
+      <div className="loader flex justify-center items-center ">
+        <Loader />
+      </div>
+    );
   }
 
+
   return (wishlist && wishlistActive) || !wishlist ? (
-    <div>
-      <div className="border rounded-sm border-main-text flex flex-col !h-[350px] w-full">
+    <div className="relative w-full">
+      <div className="border rounded-sm border-main-text flex flex-col !h-[310px] w-full">
         <Link
           className="border cursor-pointer rounded-sm !h-[240px] w-full"
           href={`/product/${value?._id}`}
@@ -159,7 +164,30 @@ const ProductCard = ({ value, wishlist = false }) => {
               ₹{value["offer"] || "290"}
             </div>
           </div>
-          <div className="flex items-center border-t py-2 justify-between">
+          <div
+            className="cursor-pointer bg-white rounded-full absolute top-2 right-2 z-[1000]"
+            onClick={
+              wishlistActive
+                ? () => {
+                    RemoveWishList({
+                      userId: userId?.user?._id,
+                      productId: value?._id,
+                    });
+                  }
+                : () => {
+                    AddWishList({
+                      userId: userId?.user?._id,
+                      productId: value?._id,
+                    });
+                  }
+            }
+          >
+            <BiSolidHeartCircle
+              fill={wishlistActive ? "red" : "black"}
+              className="h-7 cursor-pointer  animate-pulse w-7"
+            />
+          </div>
+          {/* <div className="flex items-center border-t py-2 justify-between">
             <div>
               <Link
                 href="#_"
@@ -185,7 +213,7 @@ const ProductCard = ({ value, wishlist = false }) => {
               </Link>
             </div>
             <div
-              className="cursor-pointer"
+              className="cursor-pointer absolute top-2 right-2 z-[2000]"
               onClick={
                 wishlistActive
                   ? () => {
@@ -207,13 +235,11 @@ const ProductCard = ({ value, wishlist = false }) => {
                 className="h-7 cursor-pointer  animate-pulse w-7"
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
-  ) : (
-    <></>
-  );
+  ) : null
 };
 
 export default ProductCard;

@@ -11,6 +11,7 @@ const page = () => {
   const [Product, setProduct] = useState([]);
   const [AboutProductData, setAboutProjectData] = useState();
   const { id } = useParams();
+  
   const getProduct = async (id) => {
     try {
       const response = await customAxiosGET("", getproductByIdApi(id));

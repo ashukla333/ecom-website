@@ -34,7 +34,7 @@ const SimpleNameOfferCard = ({
               width={500}
               height={500}
               alt={`Product_Image_${index}`}
-              className="!h-[260px] hover-effect"
+              className="md:!h-[260px] !h-[200px] object-cover hover-effect"
               onError={(event) => {
                 event.target.src = "/images/MyDefaultProduct.png";
                 event.error = null;

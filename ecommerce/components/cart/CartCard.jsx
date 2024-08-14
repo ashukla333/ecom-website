@@ -1,14 +1,13 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import Content from "../common/Content";
 import Link from "next/link";
 import { BiSolidHeartCircle } from "react-icons/bi";
-import Button from "../common/Button";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
-const CartCard = ({ Increment = 0, setIncrement = () => {} }) => {
- 
 
+const CartCard = ({ Increment = 0, setIncrement = () => {} }) => {
+  
   return (
     <div className="w-full h-full border bg-main-bg text-main-text">
       <div className="flex justify-between w-full items-center">

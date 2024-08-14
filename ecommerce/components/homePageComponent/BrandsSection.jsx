@@ -24,7 +24,7 @@ const BrandsSection = ({ imgClassName }) => {
   }, []);
   return (
     <>
-     <div className="items-center h-full  pt-4 justify-between gap-2 text-xl sm:text-2xl lg:text-3xl px-4 font-semibold hidden sm:flex">
+     <div className="items-center h-full  pt-4 justify-between gap-2 text-xl sm:text-2xl lg:text-3xl px-4 font-semibold  sm:flex">
           <div className="flex items-center">
             {" "}
             <div className="!h-8 !w-2 !bg-main-text !text-main-text !rounded-full !mr-2"></div>

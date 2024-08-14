@@ -26,7 +26,7 @@ const Categorys = () => {
   }, []);
 
   return (
-    <div className="text-black bg-main-bg items-center flex-initial whitespace-nowrap scrollbar-hide flex gap-3 px-10 overflow-x-auto w-full">
+    <div className="text-black bg-main-bg items-center flex-initial whitespace-nowrap scrollbar-hide flex gap-3 md:px-10 px-3 overflow-x-auto w-full">
       {categories?.filter(category => category.isActive).map((value, index) => (
         <Link
         href={`/category/${value?._id}`}

@@ -32,7 +32,12 @@ export const getWishlistByIdApi=(id)=>`/v1/wishlist/${id}`
 export const deleteWishlistApi=`/v1/wishlist/removeWishList`
 
 // cart
-
 export const createCartAPi="/v1/cart/createCart"
 export const getCartByIdApi=(id)=>`/v1/cart/${id}`
+export const getAllCartByIdApi=(id)=>`/v1/cart/getCartData/${id}`
 export const removeCartApi='/v1/cart/removeToCart'
+
+// order
+export const processOrder='/v1/order/processOrder'
+export const placeOrder='/v1/order/placeOrder'
+export const verifyPayment='/v1/order/verify-payment'

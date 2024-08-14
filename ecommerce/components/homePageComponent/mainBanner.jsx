@@ -31,7 +31,7 @@ const MainHomePageBanner = ({ bannerData = [] }) => {
 
   const swiper = useSwiper();
   return (
-    <div className="relative text-primary-color">
+    <div className="relative  text-primary-color">
       <SwiperSlider
         autoplay={{ delay: 3000 }}
         pagination={true}
@@ -44,7 +44,7 @@ const MainHomePageBanner = ({ bannerData = [] }) => {
         {inMobileMode === false
           ? bannerData?.desktopBanner?.map((banner, index) => {
               return (
-                <SwiperSlide className="aspect-[16/5]" key={index}>
+                <SwiperSlide className="!aspect-[16/5]" key={index}>
                   <div className="relative !aspect-[16/5]">
                     <Image
                       src={`${process.env.BASE_URL}${banner}`}
@@ -75,13 +75,13 @@ const MainHomePageBanner = ({ bannerData = [] }) => {
                           />
                         </div>
                       </div>
-                      <div
+                      {/* <div
                         className="!w-max cursor-pointer gap-2 h-12 animate-shimmer items-center justify-center rounded-md border border-slate-300 bg-[linear-gradient(110deg,#C291A4,45%,#1e2631,70%,#F4C2C2)] bg-[length:200%_100%] px-6 font-medium text-primary-color transition-colors focus:outline-none focus:ring-2 flex focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
                         type=""
                       >
                         <span className="!font-medium">Shop Now</span>
                         <IoArrowForwardSharp />
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </SwiperSlide>
@@ -90,12 +90,12 @@ const MainHomePageBanner = ({ bannerData = [] }) => {
           : bannerData?.mobileBanner?.map((banner, index) => {
               return (
                 <SwiperSlide className="" key={index}>
-                  <div className="relative h-[500px] w-full">
+                  <div className="relative h-[300px] w-full">
                     <Image
                       src={`${process.env.BASE_URL}${banner}`}
                       width={1000}
                       height={2000}
-                      className="h-full w-full object-fill"
+                      className="h-full w-full object-cover"
                       alt="bannerImage"
                     ></Image>
 
@@ -121,13 +121,13 @@ const MainHomePageBanner = ({ bannerData = [] }) => {
                             />
                           </div>
                         </div>
-                        <div
+                        {/* <div
                           className="!w-max cursor-pointer gap-2 h-12 animate-shimmer items-center justify-center rounded-md border border-slate-300 bg-[linear-gradient(110deg,#C291A4,45%,#1e2631,70%,#F4C2C2)] bg-[length:200%_100%] px-6 font-medium text-primary-color transition-colors focus:outline-none focus:ring-2 flex focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
                           type=""
                         >
                           <span className="!font-medium">Explore More</span>
                           <IoArrowForwardSharp />
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>

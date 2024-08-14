@@ -19,8 +19,8 @@ const LoginBanner = () => {
           alt="bannerImage"
         ></Image>
       </div>
-      <div className="absolute md:flex md:flex-row flex-col gap-4 top-4 w-full items-center md:px-10 px-2  justify-between ">
-        <div className="text-[24px] font-bold flex items-center text-primary-color ">
+      <div className="absolute md:flex md:flex-row flex-col gap-4 md:top-4 top-5 w-full items-center md:px-10 px-2  justify-between ">
+        <div className="md:text-[24px] text-[21px] text-center font-bold flex items-center text-primary-color ">
           {userData && "name" in userData && userData["name"]
             ? "Welcome back to Kingsvilla! We’re thrilled to have you with us."
             : "Register Kingsvilla"}

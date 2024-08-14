@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import Content from "../common/Content";
 import { FaPlus } from "react-icons/fa6";
 
-const CheckOutLeft = () => {
-  const [addresses, setAddresses] = useState([]);
+const CheckOutLeft = ({setAddresses,addresses}) => {
+
   const [showForm, setShowForm] = useState(false);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(null);
   const {

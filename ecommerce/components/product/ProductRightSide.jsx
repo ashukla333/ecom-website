@@ -25,14 +25,20 @@ import { toast } from "react-toastify";
 import useUserInfo from "@/app/apis/userInfo";
 import Loader from "../common/Loader";
 import { GiShoppingBag } from "react-icons/gi";
+import SizeDropdownNew from "../common/input/SizeDropDownNew";
+import { useCartStore } from "@/app/store/createStore";
 
 const ProductRightSide = ({ rating = 4, Product, aboute }) => {
+  const addToCart = useCartStore((state) => state.addToCart);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
   const totalStars = 5;
   const validRating = Math.max(
     0,
     Math.min(totalStars, Number.parseInt(rating, 10) || 0)
   );
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedSize, setSelectedSize] = useState({});
+  console.log({selectedSize})
+  
   const handleSizeChange = (size) => {
     setSelectedSize(size); // Update the state with the selected size
   };
@@ -220,7 +226,6 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
     }
   };
 
-
   const RemoveCart = async (data) => {
     setLoading(true);
     try {
@@ -251,7 +256,6 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
 
   const cartProductId = getCartData?.map((v) => v?.productId);
   const cartStatus = cartProductId?.includes(Product?._id);
- 
 
   return !loading ? (
     <div className="p-4">
@@ -279,11 +283,11 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
           </div>
           <span
             className={`bg-main-bg ${
-              Product.stock > 0 ? "text-green-500" : "text-red-500"
+              selectedSize.stock > 0 ? "text-green-500" : "text-red-500"
             }   items-center flex font-bold md:text-sm text-xs px-2 py-1 rounded-md border-main-text border`}
           >
-            {Product.stock > 0 ? "In Stock" : "Out of Stock"}:{" "}
-            {Product.stock || 0}
+            {selectedSize.stock > 0 ? "In Stock" : "Out of Stock"}:{" "}
+            {selectedSize.stock || 0}
           </span>
         </div>
         <div className="pt-3 flex items-center gap-2">
@@ -327,11 +331,11 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
             <div className="flex gap-2 items-center">
               <div className="text-gray-400 font-semibold">Size :</div>
               <div className="text-main-text font-bold">
-                <SizeDropdown
+                <SizeDropdownNew
                   setSelectedSize={setSelectedSize}
                   selectedSize={selectedSize}
                   onChange={handleSizeChange}
-                  options={sizeOptions}
+                  options={Product?.sizes}
                 />
               </div>
             </div>
@@ -351,16 +355,19 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
             onClick={
               cartStatus
                 ? () => {
-                  RemoveCart({
+                    removeFromCart(Product?._id);
+                    RemoveCart({
                       userId: userId?.user?._id,
                       productId: Product?._id,
                     });
                   }
                 : () => {
+                    addToCart(Product);
                     AddTOCART({
                       userId: userId?.user?._id,
                       productId: Product?._id,
                       size: selectedSize?.size,
+                      quantity: 0
                     });
                   }
             }

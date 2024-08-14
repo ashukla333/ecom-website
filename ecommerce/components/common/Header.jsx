@@ -1,16 +1,19 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { GiShoppingBag } from "react-icons/gi";
+
 import {
+  FaHome,
   FaInfoCircle,
   FaRegHeart,
+  FaShoppingCart,
   FaSignInAlt,
   FaSignOutAlt,
   FaUserCircle,
 } from "react-icons/fa";
 import { RiMenu2Line } from "react-icons/ri";
 import { IoMdClose } from "react-icons/io";
-import { FaCrown, FaUser, FaUserPlus } from "react-icons/fa6";
+import { FaCrown, FaHeart, FaUser, FaUserPlus } from "react-icons/fa6";
 import SearchBar from "./input/SearchBar";
 import Link from "next/link";
 import { BiSolidHeartCircle, BiUser, BiUserX } from "react-icons/bi";
@@ -20,9 +23,13 @@ import { getUserApi, logOutUserApi } from "@/app/apis/list";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { deleteCookie, setCookie } from "cookies-next";
+import { useCartStore } from "@/app/store/createStore";
+import { IoHeartCircle } from "react-icons/io5";
 
 const Header = () => {
   const router = useRouter();
+  const cartCount = useCartStore(state => state.cartCount);
+  console.log({ cartCount });
   const [isSticky, setIsSticky] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userData, setUserData] = useState();
@@ -70,7 +77,7 @@ const Header = () => {
       } else {
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -100,6 +107,16 @@ const Header = () => {
     getUser();
   }, []);
 
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'; // Disable scrolling
+    } else {
+      document.body.style.overflow = 'auto'; // Enable scrolling
+    }
+    return () => {
+      document.body.style.overflow = 'auto'; // Clean up on unmount
+    };
+  }, [isMenuOpen]);
   return (
     <nav
       className={`border-b shadow-primary-color shadow top-0 left-0 w-full ${
@@ -141,8 +158,16 @@ const Header = () => {
                   className="h-8 animate-pulse w-8"
                 />
               </Link>
-              <Link href={"/cart"} className="cursor-pointer text-main-text ">
-                <GiShoppingBag className="h-[25px] w-full" />
+              <Link
+                href="/cart"
+                className="relative cursor-pointer text-main-text"
+              >
+                <GiShoppingBag className="h-[25px] w-[25px]" />
+                {cartCount > 0 && (
+                  <div className="absolute -top-2 -right-2  bg-yellow-400 text-red-600 font-bold text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartCount}
+                  </div>
+                )}
               </Link>
               <div className="cursor-pointer text-main-text ">
                 <div
@@ -235,30 +260,36 @@ const Header = () => {
         </div>
       </div>
 
-      {isMenuOpen && (
-        <div className="lg:hidden fixed inset-0 bg-gray-800 bg-opacity-75 z-50">
-          <div className="p-4">
-            <button
-              className="text-white   focus:outline-none"
-              onClick={toggleMenu}
-            >
-              <IoMdClose className="hover:rotate-180" />
-            </button>
-            {/* Add your menu items here */}
-            <div className="text-white mt-4">
-              <a href="#" className="block py-2">
-                Home
-              </a>
-              <a href="#" className="block py-2">
-                About
-              </a>
-              <a href="#" className="block py-2">
-                Contact
-              </a>
-            </div>
-          </div>
+      <div
+      className={`fixed  inset-0 bg-main-text bg-opacity-90 z-50 flex items-start justify-center transition-transform duration-300 ${
+        isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+      }`}
+    >
+      <div
+        className={`bg-main-text opacity-70  border-gray-300 p-6 rounded-lg w-full  transition-transform duration-300 ${
+          isMenuOpen ? 'scale-100' : 'scale-95'
+        }`}
+      >
+        <button
+          className="text-white text-2xl absolute top-4 right-4"
+          onClick={toggleMenu}
+        >
+          <IoMdClose />
+        </button>
+        <div className="text-white font-mono ">
+          <Link href="/" className=" py-3 text-xl hover:bg-gray-700 rounded-md flex items-center">
+            <FaHome className="mr-3" /> Home
+          </Link>
+          <Link href="/cart" className=" py-3 text-xl hover:bg-gray-700 rounded-md flex items-center">
+            <GiShoppingBag className="mr-3" /> Cart
+          </Link>
+          <Link href="/wishlist" className=" py-3 text-xl hover:bg-gray-700 rounded-md flex items-center">
+            <IoHeartCircle fill="red" className="mr-3 h-6 w-6 animate-pulse" /> Wishlist
+          </Link>
         </div>
-      )}
+      </div>
+    </div>
+  
     </nav>
   );
 };

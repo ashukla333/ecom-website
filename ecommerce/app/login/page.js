@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const router = useRouter();
+  
   const {
     register,
     handleSubmit,
@@ -33,6 +34,8 @@ const LoginPage = () => {
         setCookie("AuthToken", result?.token, {
           maxAge: 24 * 60 * 60,
         });
+        localStorage.setItem("AuthToken", result?.token);
+      
         router.push("/");
       } else {
 

@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import { debounce } from "@/helperFunction";
 import useUserInfo from "../apis/userInfo";
 import Loader from "@/components/common/Loader";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const [Increment, setIncrement] = useState(0);
@@ -80,6 +81,10 @@ const Page = () => {
       const response = await customAxiosPOST("", createWishlistApi, data);
       if (response.status) {
         toast.success(response.message);
+        if (userId?.user?._id) {
+          getCartDataByID(userId?.user?._id);
+        }
+        window.location.reload();
       } else {
         toast.error(response.message);
       }
@@ -99,6 +104,7 @@ const Page = () => {
         if (userId?.user?._id) {
           getCartDataByID(userId?.user?._id);
         }
+        window.location.reload();
       } else {
         toast.error(response.message);
       }
@@ -123,6 +129,7 @@ const Page = () => {
       getProductAllData();
     }
   }, [getCartData]);
+  
 
   console.log({ ProductData });
 

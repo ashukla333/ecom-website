@@ -1,7 +1,9 @@
-import { getCookies } from "cookies-next";
+// import { getCookies } from "cookies-next";
 
 // login
-export const AuthToken = getCookies("AuthToken");
+// export const AuthToken = getCookies("AuthToken");
+// export const AuthToken = localStorage.getItem("AuthToken");
+
 export const loginApi = "/users/login";
 export const signUpApi = "/users/addUser";
 export const getUserApi = "/users/MyprofileDetail";
@@ -23,22 +25,23 @@ export const brandApi = (id) => `/v1/brand/${id}`;
 export const createProductApi = "/v1/product/createProduct";
 export const getproductApi = "/v1/product/getproduct";
 export const getproductByIdApi = (id) => `/v1/product/${id}`;
-export const getProductByCategoryIdApi = (id) => `/v1/product/ProductByCategoryId/${id}`;
+export const getProductByCategoryIdApi = (id) =>
+  `/v1/product/ProductByCategoryId/${id}`;
 export const productApi = (id) => `/v1/product/${id}`;
-export const searchAPI =  `/v1/product/search`;
+export const searchAPI = `/v1/product/search`;
 
 // wishlist
 export const createWishlistApi = "/v1/wishlist/createWishlist";
-export const getWishlistByIdApi=(id)=>`/v1/wishlist/${id}`
-export const deleteWishlistApi=`/v1/wishlist/removeWishList`
+export const getWishlistByIdApi = (id) => `/v1/wishlist/${id}`;
+export const deleteWishlistApi = `/v1/wishlist/removeWishList`;
 
 // cart
-export const createCartAPi="/v1/cart/createCart"
-export const getCartByIdApi=(id)=>`/v1/cart/${id}`
-export const getAllCartByIdApi=(id)=>`/v1/cart/getCartData/${id}`
-export const removeCartApi='/v1/cart/removeToCart'
+export const createCartAPi = "/v1/cart/createCart";
+export const getCartByIdApi = (id) => `/v1/cart/${id}`;
+export const getAllCartByIdApi = (id) => `/v1/cart/getCartData/${id}`;
+export const removeCartApi = "/v1/cart/removeToCart";
 
 // order
-export const processOrder='/v1/order/processOrder'
-export const placeOrder='/v1/order/placeOrder'
-export const verifyPayment='/v1/order/verify-payment'
+export const processOrder = "/v1/order/processOrder";
+export const placeOrder = "/v1/order/placeOrder";
+export const verifyPayment = "/v1/order/verify-payment";

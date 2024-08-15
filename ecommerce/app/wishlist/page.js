@@ -35,7 +35,7 @@ const Page = () => {
   return !loader?(
     <div className="w-full py-5   flex justify-center items-center">
       {Product?.length > 0 ? (
-        <div className="md:p-2 grid lg:grid-cols-5 xl:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-2 md:gap-5 gap-2">
+        <div className="md:p-2 h-screen  grid lg:grid-cols-5 xl:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 grid-cols-2 md:gap-5 gap-2">
           {Product?.length > 0 &&
             Product.map((value, index) => {
               return (

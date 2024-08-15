@@ -198,7 +198,7 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
       if (response.status || response.success) {
         setCartData(response?.data?.items);
       } else {
-        toast.error(response.message);
+        console.log(error);
       }
     } catch (error) {
       console.log(error);
@@ -331,7 +331,7 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
             </div>
             <div className="flex gap-2 items-center">
               <div className="text-gray-400 font-semibold">Size :</div>
-              <div className="text-main-text font-bold">
+              <div className="text-main-text  font-bold">
                 <SizeDropdownNew
                   setSelectedSize={setSelectedSize}
                   selectedSize={selectedSize}

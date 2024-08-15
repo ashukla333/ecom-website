@@ -18,11 +18,11 @@ console.log({options})
   }, [selectedSize, options]);
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left md:my-1 my-1">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="inline-flex md:w-[300px] w-full justify-between px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main-text"
+        className="inline-flex md:w-[300px] w-[300px] justify-between px-4 md:py-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main-text"
       >
         {selectedSize.size ? `${selectedSize.size} (${selectedSize.stock} available)` : 'Select Size'}
         <svg

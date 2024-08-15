@@ -24,7 +24,9 @@ const Header = () => {
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  console.log({
+    userData,
+  });
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   useEffect(() => {
@@ -66,20 +68,48 @@ const Header = () => {
     getUser();
   }, []);
 
+  // const LogOut = () => {
+  //   const authToken = localStorage.getItem("AuthToken");
+
+  //   if (authToken) {
+  //     // Clear user data from localStorage
+  //     localStorage.removeItem("userInfo");
+  //     localStorage.removeItem("AuthToken");
+
+  //     // Provide feedback to the user and redirect
+  //     toast.success("Logged out successfully!");
+  //     router.push("/login");
+  //   } else {
+  //     // Show message if already logged out
+  //     toast.error("Already logged out.");
+  //   }
+  // };
   const LogOut = async () => {
-    try {
-      const result = await customAxiosGET("", logOutUserApi);
-      if (result.status) {
-        localStorage.removeItem("userInfo");
-        toast.success(result?.message);
-        deleteCookie("AuthToken");
-        router.push("/login");
-      } else {
-        toast.error(result?.message);
+    const authToken = localStorage.getItem("AuthToken");
+
+    if (authToken) {
+      try {
+        // Attempt to log out via the API
+        const result = await customAxiosGET("", logOutUserApi);
+
+        if (result.status === 200) {
+          // Clear user data from localStorage
+          localStorage.removeItem("userInfo");
+          localStorage.removeItem("AuthToken");
+          deleteCookie("AuthToken");
+          // Provide feedback to the user and redirect
+          toast.success(result?.message || "Logged out successfully!");
+          router.push("/login");
+        } else {
+          toast.error(result?.message || "Logout failed.");
+        }
+      } catch (error) {
+        console.error("Logout error:", error);
+        toast.error("An error occurred while logging out.");
       }
-    } catch (error) {
-      console.error("Logout error:", error);
-      toast.error("An error occurred while logging out.");
+    } else {
+      // Show message if already logged out
+      toast.error("Already logged out.");
     }
   };
 
@@ -191,7 +221,11 @@ const Header = () => {
                 >
                   <div className="flex gap-2 border-double border-2 bg-main-bg border-main-text p-2 rounded-full items-center justify-center w-10 h-10">
                     <span className="text-[18px] font-[700] text-main-text capitalize">
-                      {userData?.name ? userData?.name.charAt(0) : <BiUser />}
+                      {userData?.user?.email ? (
+                        userData?.user?.email.charAt(0)
+                      ) : (
+                        <BiUser />
+                      )}
                     </span>
                   </div>
                   {showModal && (
@@ -211,7 +245,7 @@ const Header = () => {
                             <FaUser className="mr-2 cursor-pointer" />
                             My Account
                           </Link>
-                          {userData?.name && (
+                          {userData?.user?.email && (
                             <div
                               onClick={LogOut}
                               className="mb-2 font-serif cursor-pointer flex hover:text-gray-500 text-main-text items-center"
@@ -220,7 +254,7 @@ const Header = () => {
                               Log Out
                             </div>
                           )}
-                          {!userData?.name && (
+                          {!userData?.user?.email && (
                             <>
                               <Link
                                 href={"/login"}

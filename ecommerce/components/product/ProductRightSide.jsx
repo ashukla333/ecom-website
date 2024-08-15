@@ -327,7 +327,7 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
           <div className="flex md:flex-row flex-col pt-3  gap-y-2 gap-5">
             <div className="flex gap-2 items-center">
               <div className="text-gray-400 font-semibold">Category :</div>
-              <div className="text-main-text font-bold">{categoryData?.length>10?categoryData.slice(0,10)+"..":categoryData}</div>
+              <div className="text-main-text font-bold">{categoryData?.length>7?categoryData.slice(0,7)+"..":categoryData}</div>
             </div>
             <div className="flex gap-2 items-center">
               <div className="text-gray-400 font-semibold">Size :</div>

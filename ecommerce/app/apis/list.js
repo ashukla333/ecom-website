@@ -25,6 +25,7 @@ export const getproductApi = "/v1/product/getproduct";
 export const getproductByIdApi = (id) => `/v1/product/${id}`;
 export const getProductByCategoryIdApi = (id) => `/v1/product/ProductByCategoryId/${id}`;
 export const productApi = (id) => `/v1/product/${id}`;
+export const searchAPI =  `/v1/product/search`;
 
 // wishlist
 export const createWishlistApi = "/v1/wishlist/createWishlist";

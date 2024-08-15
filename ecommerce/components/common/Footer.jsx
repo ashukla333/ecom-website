@@ -11,38 +11,34 @@ const Footer = () => {
   const footerData = {
     account: [{
       name: "My Account",
-      Link: ''
+      Link: '/profile'
     }, {
       name: "Login / Register",
-      Link: ''
+      Link: '/login'
     },
     {
       name: "Cart",
-      Link: ''
+      Link: '/cart'
     },
     {
       name: 'Whishlist',
-      Link: ''
-    },
-    {
-      name: "Shop",
-      Link: ''
+      Link: '/wishlist'
     }],
     QuickLink: [{
       name: 'Privacy Policy',
-      Link: ""
+      Link: "/policy"
     },
     {
       name: 'Terms Of Use',
-      Link: ""
+      Link: "term-of-use"
     },
     {
       name: 'FAQ',
-      Link: ""
+      Link: "/faq"
     },
     {
       name: 'Contact',
-      Link: ""
+      Link: "/contact"
     },
     ]
   }

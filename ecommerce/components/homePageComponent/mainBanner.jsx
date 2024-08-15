@@ -47,7 +47,7 @@ const MainHomePageBanner = ({ bannerData = [] }) => {
                 <SwiperSlide className="!aspect-[16/5]" key={index}>
                   <div className="relative !aspect-[16/5]">
                     <Image
-                      src={`${process.env.BASE_URL}${banner}`}
+                      src={`${banner}`}
                       width={500}
                       height={500}
                       className="w-full !h-full !object-cover"
@@ -92,7 +92,7 @@ const MainHomePageBanner = ({ bannerData = [] }) => {
                 <SwiperSlide className="" key={index}>
                   <div className="relative h-[300px] w-full">
                     <Image
-                      src={`${process.env.BASE_URL}${banner}`}
+                      src={`${banner}`}
                       width={1000}
                       height={2000}
                       className="h-full w-full object-cover"

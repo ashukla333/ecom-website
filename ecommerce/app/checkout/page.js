@@ -1,13 +1,14 @@
 "use client";
+
 import CheckOutLeft from "@/components/checkout/CheckOutLeft";
 import CheckOutRight from "@/components/checkout/CheckOutRight";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { customAxiosGET } from "../apis/methods";
 import { getproductApi } from "../apis/list";
 import { toast } from "react-toastify";
 
-const page = () => {
+const Page = () => {
   const searchParams = useSearchParams();
   const [orderData, setOrderData] = useState(null);
   const [addresses, setAddresses] = useState([]);
@@ -15,24 +16,23 @@ const page = () => {
   const [ProductData, setProduct] = useState([]);
 
   const getSelectedAddress = (addresses) => {
-    const selectedAddress = addresses.find(address => address.selected);
-  
+    const selectedAddress = addresses.find((address) => address.selected);
+
     if (selectedAddress) {
       return {
         fullName: `${selectedAddress.firstName} ${selectedAddress.lastName}`,
         address: `${selectedAddress.address}, ${selectedAddress.area}, ${selectedAddress.city} - ${selectedAddress.pinCode}`,
-        phoneNumber: selectedAddress.number
+        phoneNumber: selectedAddress.number,
       };
     }
-  
+
     return null; // No selected address found
   };
-  
-  const selectedAddress = getSelectedAddress(addresses);
-  
-  console.log({selectedAddress})
 
- 
+  const selectedAddress = getSelectedAddress(addresses);
+
+  console.log({ selectedAddress });
+
   useEffect(() => {
     const orderDataParam = searchParams.get("orderData");
     if (orderDataParam) {
@@ -44,7 +44,7 @@ const page = () => {
   console.log({ orderData });
 
   const getProductAllData = async () => {
-    if (orderData?.length === 0) {
+    if (!orderData || orderData.length === 0) {
       return; // If no cart data, exit early
     }
 
@@ -79,20 +79,31 @@ const page = () => {
     }
   }, [orderData]);
 
-  console.log({ProductData})
-  
+  console.log({ ProductData });
+
   return (
     <div>
       <div className="flex flex-1 md:p-10 p-3 md:gap-4 gap-3 md:flex-row flex-col">
         <div className="flex-[0.6]">
-          <CheckOutLeft  setAddresses={setAddresses} addresses={addresses}/>
+          <CheckOutLeft setAddresses={setAddresses} addresses={addresses} />
         </div>
         <div className="flex-[0.4]">
-          <CheckOutRight selectedAddress={selectedAddress}  orderData={orderData} ProductData={ProductData}/>
+          <CheckOutRight
+            selectedAddress={selectedAddress}
+            orderData={orderData}
+            ProductData={ProductData}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default page;
+// Wrap Page component in Suspense in the export
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div>Loading checkout...</div>}>
+      <Page />
+    </Suspense>
+  );
+}

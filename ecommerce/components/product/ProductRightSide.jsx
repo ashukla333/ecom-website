@@ -37,8 +37,8 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
     Math.min(totalStars, Number.parseInt(rating, 10) || 0)
   );
   const [selectedSize, setSelectedSize] = useState({});
-  console.log({selectedSize})
-  
+  console.log({ selectedSize });
+
   const handleSizeChange = (size) => {
     setSelectedSize(size); // Update the state with the selected size
   };
@@ -217,6 +217,7 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
           getCartDataByID(userId?.user?._id);
         }
       } else {
+        toast.error("size is required");
         toast.error(response.message);
       }
     } catch (error) {
@@ -367,7 +368,7 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
                       userId: userId?.user?._id,
                       productId: Product?._id,
                       size: selectedSize?.size,
-                      quantity: 0
+                      quantity: 0,
                     });
                   }
             }

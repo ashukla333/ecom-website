@@ -2,7 +2,7 @@
   "name": "ecommerce",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "https://kigsvillah-backend.vercel.app",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

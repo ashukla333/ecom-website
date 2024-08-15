@@ -1,9 +1,9 @@
 import api from "./config";
 
 // GET METHOD
-export const customAxiosGET = async (microservice, url) => {
+export const customAxiosGET = async (microservice, url, params = {}) => {
   try {
-    const response = await api.get(microservice + url);
+    const response = await api.get(microservice + url, { params });
     return response.data;
   } catch (error) {
     return {

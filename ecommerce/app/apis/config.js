@@ -1,9 +1,10 @@
-import axios from 'axios';
-import { AuthToken } from './list';
+import axios from "axios";
+import { AuthToken } from "./list";
 
 // Create an Axios instance with the base URL from environment variables
 const api = axios.create({
-  baseURL: "http://localhost:5000", // Corrected typo from 'SEVER' to 'SERVER'
+  // baseURL: "http://localhost:5000",// Corrected typo from 'SEVER' to 'SERVER'
+  baseURL: "https://kigsvillah-backend.vercel.app",
   withCredentials: true,
 });
 

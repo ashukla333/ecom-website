@@ -7,7 +7,7 @@ import ProductRightSide from "@/components/product/ProductRightSide";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const [Product, setProduct] = useState([]);
   const [AboutProductData, setAboutProjectData] = useState();
   const { id } = useParams();
@@ -62,4 +62,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

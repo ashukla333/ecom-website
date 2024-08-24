@@ -25,6 +25,7 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [ProductData, setProduct] = useState([]);
   const [quantities, setQuantities] = useState({});
+  console.log({quantities})
   const userId = useUserInfo();
 
   const getCartDataByID = async (id) => {

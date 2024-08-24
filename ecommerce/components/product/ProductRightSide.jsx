@@ -43,15 +43,6 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
     setSelectedSize(size); // Update the state with the selected size
   };
 
-  // Example size options
-  const sizeOptions = [
-    { size: "S", id: 1 },
-    { size: "M", id: 2 },
-    { size: "L", id: 3 },
-    { size: "XL", id: 4 },
-    { size: "XXL", id: 4 },
-  ];
-
   const [BrandData, setBrandData] = useState();
   const [categoryData, setCategoryData] = useState();
   const getBrand = async (id) => {
@@ -217,7 +208,7 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
           getCartDataByID(userId?.user?._id);
         }
       } else {
-        toast.error("size is required");
+        // toast.error("size is required");
         toast.error(response.message);
       }
     } catch (error) {
@@ -368,7 +359,7 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
                       userId: userId?.user?._id,
                       productId: Product?._id,
                       size: selectedSize?.size,
-                      quantity: 0,
+                      quantity: 1,
                     });
                   }
             }

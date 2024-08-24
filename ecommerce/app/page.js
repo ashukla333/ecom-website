@@ -2,20 +2,22 @@
 import LoginBanner from "@/components/homePageComponent/LoginBanner";
 import MainHomePageBanner from "@/components/homePageComponent/mainBanner";
 import NewArrivalsSectionNew from "@/components/common/card/NewArrivalSection";
-// import { product, product2 } from "@/components/json";
 import React, { useEffect, useState } from "react";
 import { customAxiosGET } from "./apis/methods";
 import { getCategoryApi, getProductByCategoryIdApi } from "./apis/list";
 import { toast } from "react-toastify";
 import BrandsSection from "@/components/homePageComponent/BrandsSection";
+import Loader from "@/components/common/Loader";
+
 
 const Page = () => {
   const [product, setProduct] = useState([]);
   const [productMan, setProductMan] = useState([]);
-
   const [category, setCategories] = useState({});
+  const [loading, setLoading] = useState(true); // Loading state
 
-  const fetchCategoriesFistData = async (category) => {
+  const fetchCategoriesFirstData = async (category) => {
+    setLoading(true); // Start loading before API call
     try {
       const response = await customAxiosGET(
         "",
@@ -27,11 +29,15 @@ const Page = () => {
         toast.error(response.message);
       }
     } catch (error) {
-      console.log(error);
-      // toast.error("Failed to fetch categories.");
+      console.error(error);
+      toast.error("Failed to fetch categories.");
+    } finally {
+      setLoading(false); // Stop loading after API call
     }
   };
+
   const fetchCategoriesSecondData = async (category) => {
+    setLoading(true); // Start loading before API call
     try {
       const response = await customAxiosGET(
         "",
@@ -43,12 +49,15 @@ const Page = () => {
         toast.error(response.message);
       }
     } catch (error) {
-      console.log(error);
-      // toast.error("Failed to fetch categories.");
+      console.error(error);
+      toast.error("Failed to fetch categories.");
+    } finally {
+      setLoading(false); // Stop loading after API call
     }
   };
 
-  const fetchCategoriesAPi = async () => {
+  const fetchCategoriesAPI = async () => {
+    setLoading(true); // Start loading before API call
     try {
       const response = await customAxiosGET("", getCategoryApi);
       if (response.status) {
@@ -60,18 +69,27 @@ const Page = () => {
         toast.error(response.message);
       }
     } catch (error) {
-      // toast.error("Failed to fetch categories.");
+      console.error(error);
+      toast.error("Failed to fetch categories.");
+    } finally {
+      setLoading(false); // Stop loading after API call
     }
   };
 
   useEffect(() => {
-    fetchCategoriesAPi();
+    fetchCategoriesAPI();
   }, []);
 
   useEffect(() => {
-    fetchCategoriesFistData(category);
-    fetchCategoriesSecondData(category);
+    if (category.first && category.second) {
+      fetchCategoriesFirstData(category);
+      fetchCategoriesSecondData(category);
+    }
   }, [category]);
+
+  if (loading) {
+    return <Loader />; // Show the loader if any API is being fetched
+  }
 
   return (
     <div className="">
@@ -91,7 +109,7 @@ const Page = () => {
       />
       <LoginBanner />
       <BrandsSection />
-      {/* Product   */}
+      {/* Product Sections */}
       <NewArrivalsSectionNew
         title={`${category?.first?.categoryName || ""} Cloth`}
         navigateArrowIcon={true}
@@ -99,10 +117,8 @@ const Page = () => {
         CategoryID={category?.second?._id}
       />
       <NewArrivalsSectionNew
-        // pricecss={"hidden"}
         title={`${category?.second?.categoryName || ""} Cloth`}
         navigateArrowIcon={true}
-        // offerClass="hidden"
         CategoryID={category?.second?._id}
         newArrivalsSectionData={productMan}
       />

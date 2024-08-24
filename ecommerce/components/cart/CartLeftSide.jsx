@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CartCard from "./CartCard";
 import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
@@ -25,7 +25,26 @@ const CartLeftSide = ({
   RemoveCart,
 }) => {
   const userId = useUserInfo();
-  console.log({ quantities });
+
+  // Set default quantities to 1 for each product when the component mounts
+  useEffect(() => {
+    const initialQuantities = {};
+    let hasChanges = false;
+    
+    ProductData.forEach((product) => {
+      if (!quantities[product._id]) {
+        initialQuantities[product._id] = 1;
+        hasChanges = true;
+      } else {
+        initialQuantities[product._id] = quantities[product._id];
+      }
+    });
+
+    if (hasChanges) {
+      setQuantities(initialQuantities);
+    }
+  }, [ProductData, quantities, setQuantities]);
+
   const setIncrement = (id, value) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
@@ -36,14 +55,14 @@ const CartLeftSide = ({
   return ProductData.length > 0 ? (
     <div>
       {ProductData?.map((value, index) => {
-        const quantity = quantities[value._id] || 0;
+        const quantity = quantities[value._id] || 1;
         return (
           <div
             key={index}
-            className="w-full h-full border mb-3 rounded-sm  bg-main-bg text-main-text"
+            className="w-full h-full border mb-3 rounded-sm bg-main-bg text-main-text"
           >
             <div className="flex justify-between w-full items-center">
-              <div className="flex gap-7 md:flex-row  flex-col w-full items-center ">
+              <div className="flex gap-7 md:flex-row flex-col w-full items-center">
                 <Link
                   className="border cursor-pointer rounded-sm !h-[240px] md:!w-[190px] xl:!w-[220px] lg:!w-[150px] w-full"
                   href={`/product/${value?._id}`}
@@ -73,11 +92,11 @@ const CartLeftSide = ({
                     ))}
                   </SwiperSlider>
                 </Link>
-                <div className="flex w-full  p-2 flex-col gap-2">
+                <div className="flex w-full p-2 flex-col gap-2">
                   <Content text={value["name"]} variant={5} weight={6} />
                   <div className="py-2">
                     Quantity:-
-                    <div className="flex w-full pt-1 gap-2 ">
+                    <div className="flex w-full pt-1 gap-2">
                       <div
                         className="p-2 bg-main-text text-lg cursor-pointer text-white grid place-content-center rounded"
                         onClick={() => {
@@ -104,7 +123,7 @@ const CartLeftSide = ({
                     </div>
                   </div>
 
-                  <div className="flex gap-4  items-center w-full">
+                  <div className="flex gap-4 items-center w-full">
                     <div
                       onClick={() => {
                         RemoveCart({
@@ -112,15 +131,15 @@ const CartLeftSide = ({
                           productId: value?._id,
                         });
                       }}
-                      className={`cursor-pointer inline-flex  overflow-hidden w-full md:w-[200px] border-2 border-main-text font-bold  rounded group ${"bg-main-text text-main-bg"}`}
+                      className={`cursor-pointer inline-flex overflow-hidden w-full md:w-[200px] border-2 border-main-text font-bold rounded group ${"bg-main-text text-main-bg"}`}
                     >
                       <div
-                        className={`px-2  text-white    flex items-center justify-center`}
+                        className={`px-2 text-white flex items-center justify-center`}
                       >
                         <div className="cursor-pointer">
                           <GiShoppingBag
                             fill={"white"}
-                            className="md:h-6 h-5 cursor-pointer  animate-pulse md:w-6"
+                            className="md:h-6 h-5 cursor-pointer animate-pulse md:w-6"
                           />
                         </div>
                       </div>
@@ -140,17 +159,17 @@ const CartLeftSide = ({
                           productId: value?._id,
                         });
                       }}
-                      className={`cursor-pointer inline-flex rounded-full p-1 bg-main-text shadow-md border border-main-text  font-bold `}
+                      className={`cursor-pointer inline-flex rounded-full p-1 bg-main-text shadow-md border border-main-text font-bold`}
                     >
                       <IoHeartCircle
                         fill={"white"}
-                        className="h-7 cursor-pointer text-red-500  animate-pulse w-7"
+                        className="h-7 cursor-pointer text-red-500 animate-pulse w-7"
                       />
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-5 p-2 flex items-center  gap-3">
+                <div className="pt-5 p-2 flex items-center gap-3">
                   <span className="text-main-text md:text-[22px] text-[18px] font-bold">
                     ₹{value?.price}
                   </span>
@@ -164,20 +183,19 @@ const CartLeftSide = ({
         );
       })}
     </div>
-  ) :  (
-      <div className="flex justify-center  text-center flex-col items-center w-full h-[400px]">
-        <Image
-          src={`${process.env.BASE_URL}/noimg.gif`}
-          height={500}
-          width={500}
-          alt="No Image"
-          className="h-full w-[500px] hover-effect"
-        />
-        Nothing to Show! Unlock Your Shopping Desires: <br />
-        Fill Your Empty Cart
-      </div>
-      )
-    
+  ) : (
+    <div className="flex justify-center text-center flex-col items-center w-full h-[400px]">
+      <Image
+        src={`${process.env.BASE_URL}/noimg.gif`}
+        height={500}
+        width={500}
+        alt="No Image"
+        className="h-full w-[500px] hover-effect"
+      />
+      Nothing to Show! Unlock Your Shopping Desires: <br />
+      Fill Your Empty Cart
+    </div>
+  );
 };
 
 export default CartLeftSide;

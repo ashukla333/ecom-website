@@ -27,6 +27,7 @@ const Header = () => {
   console.log({
     userData,
   });
+
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   useEffect(() => {
@@ -145,6 +146,11 @@ const Header = () => {
       setLoading(false);
     }
   }, []);
+
+  const handleNavigation = (href) => {
+    setIsMenuOpen(false); // Close the menu
+    router.push(href); // Navigate to the new page
+  };
 
   return (
     <nav
@@ -285,55 +291,105 @@ const Header = () => {
 
       {/* Mobile Device */}
       <div className="lg:hidden block w-full border-b-2 border-black">
-        <div className="flex justify-between !w-full p-3">
-          <div className="uppercase text-base cursor-pointer font-[700]">
+        <div className="flex justify-between  items-center !w-full p-3">
+          <div
+            onClick={() => handleNavigation("/")}
+            className="uppercase text-base animate-pulse cursor-pointer font-[700]"
+          >
             Kingsvilla
           </div>
-          <div className="cursor-pointer" onClick={toggleMenu}>
-            <RiMenu2Line className="w-8 h-8" />
+          <div className="flex flex-row items-center">
+            <button
+              onClick={() => handleNavigation("/cart")}
+              className="py-3 text-xl  hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+            >
+              <GiShoppingBag className="mr-3 h-7 w-7" /> 
+            </button>
+            <button
+              onClick={() => handleNavigation("/wishlist")}
+              className="py-3 text-xl  hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+            >
+              <IoHeartCircle
+                fill="red"
+                className="mr-3 h-7 w-7 animate-pulse"
+              />{" "}
+              
+            </button>
+            <div className="cursor-pointer" onClick={toggleMenu}>
+              <RiMenu2Line className="w-8 h-8" />
+            </div>
           </div>
         </div>
       </div>
 
       <div
-        className={`fixed inset-0 bg-main-text bg-opacity-90 z-50 flex items-start justify-center transition-transform duration-300 ${
+        className={`fixed inset-0 bg-main-text bg-opacity-90 z-[50000] flex items-center justify-center transform transition-transform duration-300 ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div
-          className={`bg-main-text opacity-70 border-gray-300 p-6 rounded-lg w-full transition-transform duration-300 ${
+          className={`bg-main-text opacity-80 border-gray-500 p-6 rounded-xl shadow-lg w-full max-w-md transform transition-transform duration-300 ${
             isMenuOpen ? "scale-100" : "scale-95"
           }`}
         >
           <button
-            className="text-white text-2xl absolute top-4 right-4"
+            className="text-white text-2xl absolute top-4 right-4 hover:text-gray-300 transition-colors duration-200"
             onClick={toggleMenu}
           >
             <IoMdClose />
           </button>
-          <div className="text-white font-mono">
-            <Link
-              href="/"
-              className="py-3 text-xl hover:bg-gray-700 rounded-md flex items-center"
+          <div className="text-white font-mono space-y-4 text-center">
+            <button
+              onClick={() => handleNavigation("/")}
+              className="py-3 text-xl hover:bg-gray-700 hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
             >
               <FaHome className="mr-3" /> Home
-            </Link>
-            <Link
-              href="/cart"
-              className="py-3 text-xl hover:bg-gray-700 rounded-md flex items-center"
+            </button>
+            <button
+              onClick={() => handleNavigation("/cart")}
+              className="py-3 text-xl hover:bg-gray-700 hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
             >
               <GiShoppingBag className="mr-3" /> Cart
-            </Link>
-            <Link
-              href="/wishlist"
-              className="py-3 text-xl hover:bg-gray-700 rounded-md flex items-center"
+            </button>
+            <button
+              onClick={() => handleNavigation("/wishlist")}
+              className="py-3 text-xl hover:bg-gray-700 hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
             >
               <IoHeartCircle
                 fill="red"
                 className="mr-3 h-6 w-6 animate-pulse"
               />{" "}
               Wishlist
-            </Link>
+            </button>
+
+            {userData?.user?.email && (
+              <button
+                onClick={LogOut}
+                className="py-3 text-xl hover:bg-gray-700 hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+              >
+                <FaSignOutAlt className="mr-2 cursor-pointer" />
+                Log Out
+              </button>
+            )}
+
+            {!userData?.user?.email && (
+              <>
+                <button
+                  href={"/login"}
+                  className="py-3 text-xl hover:bg-gray-700 hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+                >
+                  <FaSignInAlt className="mr-2 cursor-pointer" />
+                  Login
+                </button>
+                <button
+                  href={"/signup"}
+                  className="py-3 text-xl hover:bg-gray-700 hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+                >
+                  <FaUserPlus className="mr-2 cursor-pointer" />
+                  Sign Up
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

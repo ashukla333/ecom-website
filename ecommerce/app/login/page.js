@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -9,10 +9,9 @@ import { setCookie } from "cookies-next";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-
 const LoginPage = () => {
   const router = useRouter();
-  
+
   const {
     register,
     handleSubmit,
@@ -28,6 +27,7 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     try {
       const result = await customAxiosPOST("", loginApi, data);
+  
       if (result?.status) {
         reset();
         toast.success(result?.message);
@@ -35,24 +35,31 @@ const LoginPage = () => {
           maxAge: 24 * 60 * 60,
         });
         localStorage.setItem("AuthToken", result?.token);
-      
         router.push("/");
       } else {
-
-        toast.error("Incorrect password");
-        console.log("Login failed: ", result.message);
+        toast.error(result?.message || "Login failed");
+        console.log("Login failed:", result.message);
       }
     } catch (error) {
-      // toast.error(error);
-      console.log("Error logging in: ", error);
+      // Log the full error object to see its structure
+      console.log("Error object:", error);
+  
+      // Handle the error based on its structure
+      if (error.response && error.response.status === 401) {
+        toast.error(error.response.data?.message || "Unauthorized: Invalid credentials");
+      } else {
+        toast.error(error.response?.data?.message || "Something went wrong, please try again.");
+      }
     }
   };
+  
+  
 
   return (
     <div className="flex flex-1 bg-main-bg h-screen flex-row w-full">
       <div className="md:flex-[0.35] md:block hidden w-full h-screen">
         <Image
-        // onClick={()=>{router.push('/')}}
+          // onClick={()=>{router.push('/')}}
           src={`${process.env.BASE_URL}/images/loginscreen.jpg`}
           height={1000}
           width={1000}

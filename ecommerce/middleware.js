@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
+
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request) {
@@ -12,5 +12,5 @@ export function middleware(request) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/cart","/wishlist","/checkout","/profile"],
+  matcher: ["/cart","/wishlist","/checkout","/profile","product"],
 };

@@ -45,3 +45,5 @@ export const removeCartApi = "/v1/cart/removeToCart";
 export const processOrder = "/v1/order/processOrder";
 export const placeOrder = "/v1/order/placeOrder";
 export const verifyPayment = "/v1/order/verify-payment";
+export const getAllOrderApi=(id)=> `/v1/order/${id}`
+export const DeleteOrderApi=(id)=> `/v1/order/${id}`

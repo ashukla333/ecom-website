@@ -248,7 +248,7 @@ const Header = () => {
                       <div className="p-2 m-1">
                         <ul>
                           <Link
-                            href={"/profile"}
+                            href={"profile?tab=1"}
                             className="mb-2 font-serif cursor-pointer flex hover:text-gray-500 text-main-text items-center"
                           >
                             <FaUser className="mr-2 cursor-pointer" />
@@ -348,7 +348,10 @@ const Header = () => {
 
           {/* Profile Section */}
           {userData?.user ? (
-            <div className="text-center mb-6">
+            <div
+              className="text-center mb-6"
+              onClick={() => handleNavigation("/profile?tab=1")}
+            >
               <Image
                 src={userData.user.profilePicture || "/products/p11.jpg"}
                 alt="Profile"
@@ -395,7 +398,7 @@ const Header = () => {
 
             {/* My Orders */}
             <button
-              onClick={() => handleNavigation("/my-orders")}
+              onClick={() => handleNavigation("/profile?tab=2")}
               className="py-3 px-5 text-lg hover:bg-gray-200 rounded-md flex items-center justify-center transition-all duration-200  border-gray-300"
             >
               <BsBoxSeam className="mr-3" /> My Orders
@@ -403,7 +406,7 @@ const Header = () => {
 
             {/* Order Details */}
             <button
-              onClick={() => handleNavigation("/order-details")}
+              onClick={() => handleNavigation("/profile?tab=3")}
               className="py-3 px-5 text-lg hover:bg-gray-200 rounded-md flex items-center justify-center transition-all duration-200  border-gray-300"
             >
               <MdOutlineReceiptLong className="mr-3" /> Order Details

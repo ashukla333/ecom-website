@@ -11,7 +11,7 @@ const Footer = () => {
   const footerData = {
     account: [{
       name: "My Account",
-      Link: '/profile'
+      Link: '/profile?tab=1'
     }, {
       name: "Login / Register",
       Link: '/login'

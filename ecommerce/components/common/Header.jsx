@@ -14,6 +14,9 @@ import { useRouter } from "next/navigation";
 import { deleteCookie } from "cookies-next";
 import { useCartStore } from "@/app/store/createStore";
 import { IoHeartCircle } from "react-icons/io5";
+import Image from "next/image";
+import { BsBoxSeam } from "react-icons/bs";
+import { MdOutlineReceiptLong } from "react-icons/md";
 
 const Header = () => {
   const router = useRouter();
@@ -291,101 +294,144 @@ const Header = () => {
 
       {/* Mobile Device */}
       <div className="lg:hidden block w-full border-b-2 border-black">
-        <div className="flex justify-between  items-center !w-full p-3">
+        <div className="flex justify-between items-center w-full p-3">
+          {/* Logo / Home Navigation */}
           <div
             onClick={() => handleNavigation("/")}
-            className="uppercase text-base animate-pulse cursor-pointer font-[700]"
+            className="uppercase text-base font-bold animate-pulse cursor-pointer"
           >
             Kingsvilla
           </div>
-          <div className="flex flex-row items-center">
+
+          {/* Icons */}
+          <div className="flex flex-row items-center space-x-4">
+            {/* Cart Icon */}
             <button
               onClick={() => handleNavigation("/cart")}
-              className="py-3 text-xl  hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+              className="hover:bg-gray-200 rounded-md p-2 flex items-center justify-center transition-all duration-200"
             >
-              <GiShoppingBag className="mr-3 h-7 w-7" /> 
+              <GiShoppingBag className="h-7 w-7 text-black" />
             </button>
+
+            {/* Wishlist Icon */}
             <button
               onClick={() => handleNavigation("/wishlist")}
-              className="py-3 text-xl  hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+              className="hover:bg-gray-200 rounded-md p-2 flex items-center justify-center transition-all duration-200"
             >
-              <IoHeartCircle
-                fill="red"
-                className="mr-3 h-7 w-7 animate-pulse"
-              />{" "}
-              
+              <IoHeartCircle fill="red" className="h-7 w-7 animate-pulse" />
             </button>
+
+            {/* Menu Toggle Icon */}
             <div className="cursor-pointer" onClick={toggleMenu}>
-              <RiMenu2Line className="w-8 h-8" />
+              <RiMenu2Line className="w-8 h-8 text-black" />
             </div>
           </div>
         </div>
       </div>
 
       <div
-        className={`fixed inset-0 bg-main-text bg-opacity-90 z-[50000] flex items-center justify-center transform transition-transform duration-300 ${
+        className={`fixed inset-0 bg-white bg-opacity-90 z-[50000] flex items-center justify-center transition-transform duration-300 ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div
-          className={`bg-main-text opacity-80 border-gray-500 p-6 rounded-xl shadow-lg w-full max-w-md transform transition-transform duration-300 ${
+          className={`relative bg-white overflow-y-auto  border-gray-200 p-6 rounded-xl shadow-xl w-full max-w-sm transform transition-transform duration-300 ${
             isMenuOpen ? "scale-100" : "scale-95"
           }`}
         >
           <button
-            className="text-white text-2xl absolute top-4 right-4 hover:text-gray-300 transition-colors duration-200"
+            className="text-black text-2xl absolute top-4 right-4 hover:text-gray-500 transition-colors duration-200"
             onClick={toggleMenu}
           >
             <IoMdClose />
           </button>
-          <div className="text-white font-mono space-y-4 text-center">
+
+          {/* Profile Section */}
+          {userData?.user ? (
+            <div className="text-center mb-6">
+              <Image
+                src={userData.user.profilePicture || "/products/p11.jpg"}
+                alt="Profile"
+                width={500}
+                height={500}
+                className="w-24 h-24 rounded-full object-cover hover-effect mx-auto mb-4"
+              />
+              <h2 className="text-xl capitalize font-semibold text-black">
+                {userData.name}
+              </h2>
+              <p className="text-gray-500">{userData.user.email}</p>
+            </div>
+          ) : (
+            <div className="text-center mb-6">
+              <h2 className="text-xl font-semibold text-black">
+                Welcome, Guest!
+              </h2>
+              <p className="text-gray-500">
+                Sign in to personalize your experience
+              </p>
+            </div>
+          )}
+
+          {/* Navigation Buttons */}
+          <div className="text-black font-sans space-y-4 text-center">
             <button
               onClick={() => handleNavigation("/")}
-              className="py-3 text-xl hover:bg-gray-700 hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+              className="py-3 px-5 text-lg hover:bg-gray-200 rounded-md flex items-center justify-center transition-all duration-200  border-gray-300"
             >
               <FaHome className="mr-3" /> Home
             </button>
             <button
               onClick={() => handleNavigation("/cart")}
-              className="py-3 text-xl hover:bg-gray-700 hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+              className="py-3 px-5 text-lg hover:bg-gray-200 rounded-md flex items-center justify-center transition-all duration-200  border-gray-300"
             >
               <GiShoppingBag className="mr-3" /> Cart
             </button>
             <button
               onClick={() => handleNavigation("/wishlist")}
-              className="py-3 text-xl hover:bg-gray-700 hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+              className="py-3 px-5 text-lg hover:bg-gray-200 rounded-md flex items-center justify-center transition-all duration-200  border-gray-300"
             >
-              <IoHeartCircle
-                fill="red"
-                className="mr-3 h-6 w-6 animate-pulse"
-              />{" "}
-              Wishlist
+              <IoHeartCircle fill="black" className="mr-3 h-6 w-6" /> Wishlist
             </button>
 
-            {userData?.user?.email && (
+            {/* My Orders */}
+            <button
+              onClick={() => handleNavigation("/my-orders")}
+              className="py-3 px-5 text-lg hover:bg-gray-200 rounded-md flex items-center justify-center transition-all duration-200  border-gray-300"
+            >
+              <BsBoxSeam className="mr-3" /> My Orders
+            </button>
+
+            {/* Order Details */}
+            <button
+              onClick={() => handleNavigation("/order-details")}
+              className="py-3 px-5 text-lg hover:bg-gray-200 rounded-md flex items-center justify-center transition-all duration-200  border-gray-300"
+            >
+              <MdOutlineReceiptLong className="mr-3" /> Order Details
+            </button>
+
+            {/* Log In/Out and Sign Up */}
+            {userData?.user?.email ? (
               <button
                 onClick={LogOut}
-                className="py-3 text-xl hover:bg-gray-700 hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+                className="py-3 px-5 text-lg hover:bg-gray-200 rounded-md flex items-center justify-center transition-all duration-200  border-gray-300"
               >
-                <FaSignOutAlt className="mr-2 cursor-pointer" />
+                <FaSignOutAlt className="mr-2" />
                 Log Out
               </button>
-            )}
-
-            {!userData?.user?.email && (
+            ) : (
               <>
                 <button
-                  href={"/login"}
-                  className="py-3 text-xl hover:bg-gray-700 hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+                  onClick={() => handleNavigation("/login")}
+                  className="py-3 px-5 text-lg hover:bg-gray-200 rounded-md flex items-center justify-center transition-all duration-200  border-gray-300"
                 >
-                  <FaSignInAlt className="mr-2 cursor-pointer" />
+                  <FaSignInAlt className="mr-2" />
                   Login
                 </button>
                 <button
-                  href={"/signup"}
-                  className="py-3 text-xl hover:bg-gray-700 hover:bg-opacity-80 rounded-md flex items-center justify-center transition-all duration-200"
+                  onClick={() => handleNavigation("/signup")}
+                  className="py-3 px-5 text-lg hover:bg-gray-200 rounded-md flex items-center justify-center transition-all duration-200  border-gray-300"
                 >
-                  <FaUserPlus className="mr-2 cursor-pointer" />
+                  <FaUserPlus className="mr-2" />
                   Sign Up
                 </button>
               </>

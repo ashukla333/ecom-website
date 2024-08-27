@@ -96,14 +96,10 @@ const Page = () => {
       <MainHomePageBanner
         bannerData={{
           desktopBanner: [
-            "/images/mainBanner.jpg",
-            "/images/img11.jpg",
-            "/images/img22.jpg",
+            "/images/bannerVideo.mp4",
           ],
           mobileBanner: [
-            "/images/loginscreen.jpg",
-            "/images/signup.jpg",
-            "/images/login.jpg",
+            "/images/bannerVideo.mp4",
           ],
         }}
       />

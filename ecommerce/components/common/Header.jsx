@@ -157,11 +157,11 @@ const Header = () => {
 
   return (
     <nav
-      className={`border-b shadow-primary-color shadow top-0 left-0 w-full transition-all duration-300 ${
-        isSticky
-          ? "!bg-primary-color shadow-lg !text-secondary-color"
-          : "bg-transparent text-secondary-color"
-      } flex justify-between items-center !z-[1000]`}
+    className={`border-b shadow-primary-color shadow top-0 left-0 w-full transition-all duration-300 ${
+      isSticky
+        ? "bg-gradient-to-r fixed from-purple-100 via-main-bg to-purple-100  !text-secondary-color"
+        : "!bg-transparent text-secondary-color"
+    } flex justify-between items-center !z-[1000]`}
     >
       {/* Laptop Device */}
       <div className="w-full border-b-2 border-primary-color py-2 z-[1000] lg:block hidden">

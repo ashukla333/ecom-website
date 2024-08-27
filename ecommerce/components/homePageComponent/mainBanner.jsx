@@ -45,14 +45,19 @@ const MainHomePageBanner = ({ bannerData = [] }) => {
           ? bannerData?.desktopBanner?.map((banner, index) => {
               return (
                 <SwiperSlide className="!aspect-[16/5]" key={index}>
-                  <div className="relative !aspect-[16/5]">
-                    <Image
+                  <div className="relative !aspect-[16/5] bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 ">
+                  
+                    <video
                       src={`${banner}`}
                       width={500}
                       height={500}
-                      className="w-full !h-full !object-cover"
-                      alt="bannerImage"
-                    ></Image>
+                      autoPlay
+                      muted
+                      loop
+                      // controls
+                      className="w-full h-full  object-cover"
+                      alt="Video Player"
+                    />
 
                     <div className="!flex !flex-col !gap-2 lg:!gap-5 absolute !top-1/2 !left-20 md:!left-32 translate-y-[-50%]">
                       <Content
@@ -91,15 +96,19 @@ const MainHomePageBanner = ({ bannerData = [] }) => {
               return (
                 <SwiperSlide className="" key={index}>
                   <div className="relative h-[300px] w-full">
-                    <Image
+                  <video
                       src={`${banner}`}
-                      width={1000}
-                      height={2000}
-                      className="h-full w-full object-cover"
-                      alt="bannerImage"
-                    ></Image>
+                      width={500}
+                      height={500}
+                      autoPlay
+                      muted
+                      loop
+                      // controls
+                      className="w-full h-full  object-cover"
+                      alt="Video Player"
+                    />
 
-                    <div className="!absolute !w-full !top-0 !py-5">
+                    <div className="!absolute !w-full !top-16 !py-5">
                       <div className="!flex !flex-col !gap-2 lg:!gap-5 !items-center !justify-center">
                         <Content
                           text={"Shop Smart, Live Better!"}
@@ -147,7 +156,7 @@ const MainHomePageBanner = ({ bannerData = [] }) => {
             className="bannerPrev absolute right-1 !bg-primary-color  top-[50%] translate-y-[-50%] h-20 z-20 cursor-pointer !text-xl"
             type="secondary"
           >
-            <FiArrowRight  className="text-main-text"/>
+            <FiArrowRight className="text-main-text" />
           </Button>
         </div>
       </SwiperSlider>

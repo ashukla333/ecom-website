@@ -1,16 +1,21 @@
 import { NextResponse } from "next/server";
 
+// This function is now marked `async`
+export async function middleware(request) {
+  // Example of awaiting an async operation, if needed in the future
+  const authToken = await request.cookies.get("AuthToken");
+  console.log(authToken, "authtoken");
 
-// This function can be marked `async` if using `await` inside
-export function middleware(request) {
-  if (request.cookies.get("AuthToken")) {
-    return null;
+  // Check if AuthToken exists
+  if (authToken) {
+    return NextResponse.next(); // Continue with the next middleware or the requested page
   }
+
+  // If no AuthToken, redirect to login
   return NextResponse.redirect(new URL("/login", request.url));
-  
 }
 
-// See "Matching Paths" below to learn more
+// Matching Paths configuration
 export const config = {
-  matcher: ["/cart","/wishlist","/checkout","/profile"],
+  matcher: ["/cart", "/wishlist", "/profile","/checkout","/cart"],
 };

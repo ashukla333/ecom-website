@@ -26,11 +26,11 @@ const Page = () => {
       if (response.status) {
         setProduct(response.data);
       } else {
-        toast.error(response.message);
+        // toast.error(response.message);
       }
     } catch (error) {
       console.error(error);
-      toast.error("Failed to fetch categories.");
+      // toast.error("Failed to fetch categories.");
     } finally {
       setLoading(false); // Stop loading after API call
     }
@@ -46,11 +46,11 @@ const Page = () => {
       if (response.status) {
         setProductMan(response.data);
       } else {
-        toast.error(response.message);
+        // toast.error(response.message);
       }
     } catch (error) {
       console.error(error);
-      toast.error("Failed to fetch categories.");
+      // toast.error("Failed to fetch categories.");
     } finally {
       setLoading(false); // Stop loading after API call
     }
@@ -66,11 +66,11 @@ const Page = () => {
           second: response.data.categorylist[1],
         });
       } else {
-        toast.error(response.message);
+        // toast.error(response.message);
       }
     } catch (error) {
       console.error(error);
-      toast.error("Failed to fetch categories.");
+      // toast.error("Failed to fetch categories.");
     } finally {
       setLoading(false); // Stop loading after API call
     }

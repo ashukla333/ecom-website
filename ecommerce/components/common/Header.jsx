@@ -176,7 +176,7 @@ const Header = () => {
             </Link>
           </div>
           <div className="flex-[0.6] p-2">
-            <SearchBar placeholder={"Search by Product & Category name..."} />
+            {/* <SearchBar placeholder={"Search by Product & Category name..."} /> */}
             {/* {loading ? (
               <p>Loading...</p>
             ) : (

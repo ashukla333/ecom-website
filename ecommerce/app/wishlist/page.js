@@ -20,7 +20,7 @@ const Page = () => {
         setLoader(false)
         setProduct(response?.data?.productData);
       } else {
-        toast.error(response.message);
+        // toast.error(response.message);
         setLoader(false)
       }
     } catch (error) {

@@ -18,7 +18,7 @@ const Page = () => {
       if (response.status) {
         setProduct(response?.data?.productData);
       } else {
-        toast.error(response.message);
+        // toast.error(response.message);
       }
     } catch (error) {
       console.log(error);

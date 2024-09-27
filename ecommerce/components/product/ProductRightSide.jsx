@@ -139,7 +139,7 @@ const ProductRightSide = ({ rating = 4, Product, aboute }) => {
       if (response.status) {
         setProductWishList(response?.data?.products);
       } else {
-        toast.error(response.message);
+        // toast.error(response.message);
       }
     } catch (error) {
       toast.error("Failed to fetch wishlist.");

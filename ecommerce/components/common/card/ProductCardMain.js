@@ -67,7 +67,7 @@ const ProductCardMain = ({ value, wishlist = false }) => {
         setProductWishList(response?.data?.products);
       } else {
         setLoading(false);
-        toast.error(response.message);
+        // toast.error(response.message);
       }
     } catch (error) {
         setLoading(false);

@@ -61,7 +61,7 @@ const ProductCard = ({ value, wishlist = false }) => {
       if (response.status) {
         setProductWishList(response?.data?.products);
       } else {
-        toast.error(response.message);
+        // toast.error(response.message);
       }
     } catch (error) {
       toast.error("Failed to fetch wishlist.");
